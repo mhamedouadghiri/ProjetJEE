@@ -1,8 +1,9 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/uiDesigner.xml
 # Datasource local storage ignored files
-/../../../../../../:\Users\Mhamed\IdeaProjects\ProjetJEE\.idea/dataSources/
+/dataSources
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
