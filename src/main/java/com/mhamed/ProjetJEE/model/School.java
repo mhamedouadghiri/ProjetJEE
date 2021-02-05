@@ -1,15 +1,13 @@
 package com.mhamed.ProjetJEE.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class School {
+@EqualsAndHashCode(callSuper = true)
+public class School extends User {
     private Long id;
     private String name;
     private String phone;
