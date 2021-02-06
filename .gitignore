@@ -8,3 +8,8 @@
 # Maven
 target/
 log/
+
+#Eclipse
+.settings/
+
+frontend/node_modules/
