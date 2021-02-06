@@ -1,43 +1,22 @@
 package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Company;
+import com.mhamed.ProjetJEE.model.UserType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class CompanyDatasource extends BaseDatasource<Company> implements CompanyDAO {
+public class CompanyDatasource extends UserDatasource implements CompanyDAO {
 
-    @Override
-    public Company get(Long id) {
-        String query = "select * from company where id = ?;";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, id);
-            ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                return Company.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .description(resultSet.getString("description"))
-                        .city(resultSet.getString("city"))
-                        .country(resultSet.getString("country"))
-                        .address(resultSet.getString("address"))
-                        .phone(resultSet.getString("phone"))
-                        .email(resultSet.getString("email"))
-                        .password(resultSet.getString("password"))
-                        .internshipsManagerId(resultSet.getLong("internships_manager_id"))
-                        .build();
-            }
-        } catch (SQLException ignored) {
-        }
-        return null;
+    public CompanyDatasource() {
+        super(UserType.company);
     }
 
     @Override
     public Long save(Company entity) {
-        String query = "insert into company values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "insert into company values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getName());
@@ -58,19 +37,5 @@ public class CompanyDatasource extends BaseDatasource<Company> implements Compan
         } catch (SQLException ignored) {
         }
         return null;
-    }
-
-    @Override
-    public Boolean delete(Long id) {
-        String query = "delete from company where id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, id);
-            if (ps.executeUpdate() == 1) {
-                return true;
-            }
-        } catch (SQLException ignored) {
-        }
-        return false;
     }
 }

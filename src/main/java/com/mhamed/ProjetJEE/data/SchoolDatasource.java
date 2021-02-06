@@ -1,39 +1,22 @@
 package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.School;
+import com.mhamed.ProjetJEE.model.UserType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SchoolDatasource extends BaseDatasource<School> implements SchoolDAO {
+public class SchoolDatasource extends UserDatasource implements SchoolDAO {
 
-    @Override
-    public School get(Long id) {
-        String query = "select * from school where id = ?;";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, id);
-            ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                return School.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .phone(resultSet.getString("phone"))
-                        .email(resultSet.getString("email"))
-                        .password(resultSet.getString("password"))
-                        .internshipsManagerId(resultSet.getLong("internships_manager_id"))
-                        .build();
-            }
-        } catch (SQLException ignored) {
-        }
-        return null;
+    public SchoolDatasource() {
+        super(UserType.school);
     }
 
     @Override
     public Long save(School entity) {
-        String query = "insert into school values (null, ?, ?, ?, ?, ?);";
+        String query = "insert into school values (null, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getName());
@@ -50,19 +33,5 @@ public class SchoolDatasource extends BaseDatasource<School> implements SchoolDA
         } catch (SQLException ignored) {
         }
         return null;
-    }
-
-    @Override
-    public Boolean delete(Long id) {
-        String query = "delete from school where id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, id);
-            if (ps.executeUpdate() == 1) {
-                return true;
-            }
-        } catch (SQLException ignored) {
-        }
-        return false;
     }
 }

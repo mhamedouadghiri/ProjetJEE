@@ -3,14 +3,15 @@ package com.mhamed.ProjetJEE.model;
 import lombok.*;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class InternshipsManager extends User {
-    private Long id;
     private String name;
-    private String email;
-    private String phone;
-    private String password;
+
+    @Builder
+    public InternshipsManager(Long id, String email, String password, String phone, String name) {
+        super(id, email, password, phone);
+        this.name = name;
+    }
 }
