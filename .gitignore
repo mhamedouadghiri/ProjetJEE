@@ -5,11 +5,11 @@
 *.iws
 /*.ipr
 
+# Eclipse
+.settings/
+.classpath
+.project
+
 # Maven
 target/
 log/
-
-#Eclipse
-.settings/
-
-frontend/node_modules/
