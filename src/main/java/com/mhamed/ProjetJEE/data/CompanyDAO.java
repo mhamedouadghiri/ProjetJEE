@@ -4,5 +4,5 @@ import com.mhamed.ProjetJEE.model.Company;
 
 public interface CompanyDAO extends UserDAO {
 
-    Long save(Company company);
+    Long save(Company entity);
 }

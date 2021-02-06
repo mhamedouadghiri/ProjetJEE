@@ -4,5 +4,5 @@ import com.mhamed.ProjetJEE.model.Representative;
 
 public interface RepresentativeDAO extends UserDAO {
 
-    Long save(Representative company);
+    Long save(Representative entity);
 }
