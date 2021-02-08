@@ -39,7 +39,7 @@ function Login() {
   return (
     <div className="login">
       <img
-        src="https://lh3.googleusercontent.com/proxy/WogoHA7hWRi_X01_X_AeLYjteUTyxV7PEUoDuMha4Bu0y3oCsQktGi3fGibPlsHRL2sSzz0L-ollXTq4vtBPiip4VsKmtLt5eRUV4PdAELMP3ZjdqZFB3M5xZJwh-xbHq-E8eHZAJVYyB8SCapxGV0z-Zx_OJeSmUuHvbJWPyZp_Ib_pUzsrjA"
+        src="https://lh3.googleusercontent.com/proxy/LSgjG7SEpjFike5a7AWALTkL3LBMd6px2f4Iy1JlKQdlJNLWU_FTr3b2eDiVbKWn0V5y2IfqE8TEKVxlYxSYZWe8dtEdFyw_-GREFYWnqaNWIi6asgLYM-1wZ7SemHkuSUAUPxz7bb2ZSAPK4urdnm41b9NICbwbgzzjO1x7U0xgUK3xe10gTA"
         alt=""
       />
       <form onSubmit={postData}>
