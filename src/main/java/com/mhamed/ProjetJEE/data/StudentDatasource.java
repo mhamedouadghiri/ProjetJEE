@@ -34,7 +34,7 @@ public class StudentDatasource extends UserDatasource implements StudentDAO {
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    return generatedKeys.getLong("id");
+                    return generatedKeys.getLong(1);
                 }
             }
         } catch (SQLException ignored) {

@@ -26,7 +26,7 @@ public class InternshipsManagerDatasource extends UserDatasource implements Inte
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    return generatedKeys.getLong("id");
+                    return generatedKeys.getLong(1);
                 }
             }
         } catch (SQLException ignored) {
