@@ -47,6 +47,21 @@ public abstract class UserDatasource implements UserDAO {
         return false;
     }
 
+    @Override
+    public User getByEmail(String email) {
+        String query = "select * from " + userType.toString() + " where email = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return buildUser(resultSet);
+            }
+        } catch (SQLException ignored) {
+        }
+        return null;
+    }
+
     private User buildUser(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong("id");
         String email = resultSet.getString("email");
