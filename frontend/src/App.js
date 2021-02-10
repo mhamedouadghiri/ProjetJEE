@@ -7,6 +7,7 @@ import Responsable from "./components/Responsable";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Etudiant from "./components/Etudiant";
 import Entreprise from "./components/Entreprise";
+import CollectData from "./components/CollectData";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route exact path="/responsable" component={Responsable} />
                 <Route exact path="/etudiant" component={Etudiant} />
                 <Route exact path="/entreprise" component={Entreprise} />
+                <Route exact path="/data" component={CollectData} />
               </Switch>
             </div>
           </div>

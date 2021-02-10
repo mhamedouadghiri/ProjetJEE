@@ -8,63 +8,89 @@ function Responsable() {
   //for connection
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [email1, setEmail1] = useState("");
+
+  let detailsAuth = {
+    email: email1,
+    password: password,
+    "user-type": "internships_manager",
+  };
+
+  let formBodyAuth = [];
+  for (let property in detailsAuth) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(detailsAuth[property]);
+    formBodyAuth.push(encodedKey + "=" + encodedValue);
+  }
+  formBodyAuth = formBodyAuth.join("&");
 
   const postData = (e) => {
     e.preventDefault();
     let result = fetch(
-      "https://webhook.site/989f9414-3148-4021-a820-08491aa47267",
+      "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/check-user",
       {
-        method: "post",
-        mode: "no-cors",
+        method: "POST",
+        //mode: "no-cors",
         headers: {
           Accept: "application/json",
-          "Content-type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
+        body: formBodyAuth,
       }
-    );
-    console.log(result);
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
   //for inscription
-  const [email1, setEmail1] = useState("");
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+
+  let details = {
+    email: email,
+    password: password1,
+    name: name,
+    phone: phone,
+    "user-type": "internships_manager",
+  };
+
+  let formBody = [];
+  for (let property in details) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(details[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
 
   const inscription = (e) => {
     e.preventDefault();
     if (
       password1 === password2 &&
       name !== "" &&
-      email1 !== "" &&
+      email !== "" &&
       phone !== ""
     ) {
       alert("dakchi howa hadak");
       let result = fetch(
-        "https://webhook.site/989f9414-3148-4021-a820-08491aa47267",
+        "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/register-user",
         {
           method: "post",
-          mode: "no-cors",
+          //mode: "no-cors",
           headers: {
             Accept: "application/json",
-            "Content-type": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
           },
-          body: JSON.stringify({
-            email: email1,
-            password: password1,
-            name: name,
-            "user-type": "internships_manager",
-          }),
+          body: formBody,
         }
-      );
-      console.log(result);
+      )
+        .then((response) => response.json())
+        .then((data) => console.log("the data:", data));
+
       removeInscription();
       setPhone("");
-      setEmail1("");
+      setEmail("");
       setName("");
       setPassword1("");
       setPassword2("");
@@ -82,8 +108,8 @@ function Responsable() {
         />
         <form onSubmit={postData}>
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={email1}
+            onChange={(e) => setEmail1(e.target.value)}
             placeholder="Email"
             type="email"
           />
@@ -102,9 +128,9 @@ function Responsable() {
           </span>
         </p>
       </div>
-
+      {/* inscription */}
       <div className="formulaireInscription">
-        <form className="userInscription" onSubmit={inscription}>
+        <form className="userInscription" onSubmit={inscription} method="post">
           <div className="firstPart">
             <div className="first">
               <h3>S'inscrire</h3>
@@ -118,8 +144,8 @@ function Responsable() {
           <div className="secondPart">
             <div className="zoneMail">
               <input
-                value={email1}
-                onChange={(e) => setEmail1(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 type="email"
               />
@@ -159,7 +185,6 @@ function Responsable() {
               </div>
             </div>
           </div>
-
           <Button type="submit" className="btn btn-warning">
             Sing In
           </Button>
