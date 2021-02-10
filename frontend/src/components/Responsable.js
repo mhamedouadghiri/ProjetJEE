@@ -26,7 +26,7 @@ function Responsable() {
 
   const postData = (e) => {
     e.preventDefault();
-    let result = fetch(
+    fetch(
       "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/check-user",
       {
         method: "POST",
@@ -73,7 +73,7 @@ function Responsable() {
       phone !== ""
     ) {
       alert("dakchi howa hadak");
-      let result = fetch(
+      fetch(
         "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/register-user",
         {
           method: "post",
