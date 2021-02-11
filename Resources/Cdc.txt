@@ -1,6 +1,7 @@
-Le but de notre sujet c'est la conception et le développement d'une application web permettant d'accéder à :
-- Un espace public décrivant le journal, les papiers déjà publiés, les nouveautés, les Comités scientifiques, les Dates importantes, des Issues Spéciales, faire des demandes de création de compte, ......
+Le but de notre sujet c'est la conception et le développement d'une application web qui facilite a une école d'ingènieurs de trouver des stages en entreprise pour placer les étudiants, et cette dernière permettant d'accéder à :
+
 - Un espace privé pour : 
-     * Un doctorant ou chercheur : accéder à son compte, soumissionner un article scientifique, visualiser l'état de ses papiers, accéder aux commentaires des reviewers, ...
-     * Un Editor in Chief : accéder à son compte, définir les critères de reviewing, visualiser les articles soumissionnés, accepter ou refuser le passage des articles au reviewing selon le thème du journal, affecter un article à des reviewers (3 par exemple), recevoir les reviews et envoyer les décisions aux doctorants, ….
-     * Un reviewer : accéder à son compte, lire un article, ajouter les reviews selon les critères définis par l'Editor in Chief, télécharger l'attestation d'un reviewer dans le journal, ... 
+     * Une Entreprise : Créer des offres de stages, Consulter toutes les offres de l'entreprise qu'il gère, Consulter la liste de tous les étudiants qui ont postulé à une offre qu'il a crée, Convoquer les étudiant pour un entretien.
+     * Admin école : Peut voir les entreprises inscrites, peut inscrire les étudiants, voir qui sont les étudiant qui n'ont pas encore trouvé un stage.
+     * Etudiant : accéder à son compte, améliorer son CV, consulter les stages postuler par les entreprises, peut postuler à une offre en joignant une photo ou/et une lettre de motivation, peut refuser une demande d'entretien ou la valider, peut changer son statut : à la Recherche/Stage Trouvé.
+     * Un Admin Système : peut créer des entreprises, peut créer des écoles.

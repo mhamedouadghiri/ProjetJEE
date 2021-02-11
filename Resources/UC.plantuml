@@ -1,0 +1,54 @@
+@startuml ProjetJEE
+left to right direction
+actor "Entreprise" as fc
+actor "Ecole" as EC
+actor "Etudiant" as ET
+rectangle App {
+  usecase "Gestion des stages" as UC1
+  usecase "Ajouter un offre" as UC2
+  usecase "Annuler un offre" as UC3
+  usecase "Consulter toutes les offres" as UC4
+  usecase (Convoquer les étudiants \npour un entretient) as UC5
+  usecase "S'authentification" as UC6
+  usecase "Voir les entreprises inscrites" as UC7
+  usecase "Gestion des étudiants" as UC8
+  usecase "Ajouter " as UC9
+  usecase "Supprimer" as UC10
+  usecase "Améliorer son CV" as UC11
+  usecase "experience" as UC12
+  usecase "language" as UC13
+  usecase "Skills" as UC14
+  usecase "consulter les stages" as UC15
+  usecase "Postuler" as UC16
+  usecase "Gestion d'entretient" as UC17
+  usecase "accepter" as UC18
+  usecase "refuser" as UC19
+}
+EC --> UC7
+fc --> UC1
+fc --> UC4 
+UC1 <|-down-UC2 
+UC1 <|-UC3
+UC4 <|-UC5
+UC1 .down.> UC6:include
+UC4 .down.> UC6:include
+EC --> UC8
+UC8 <|-down- UC9
+UC8 <|-left- UC10
+UC8 .down.> UC6:include
+UC7 .down.> UC6:include
+ET --> UC11
+UC11 <|-down- UC12
+UC11 <|- UC13
+UC11 <|-down- UC14
+ET --> UC15
+UC15 <|-down- UC16
+ET --> UC17
+UC17 <|-- UC18
+UC17 <|-- UC19
+
+
+
+
+
+@enduml
