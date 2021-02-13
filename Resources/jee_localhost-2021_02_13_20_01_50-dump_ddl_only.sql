@@ -28,8 +28,8 @@ CREATE TABLE `application` (
   `candidate_picture` blob,
   `cover_letter` text,
   `request` tinyint(1) NOT NULL,
-  `answer` tinyint(1) NOT NULL,
-  `result` tinyint(1) NOT NULL,
+  `answer` tinyint(1) DEFAULT NULL,
+  `result` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`internship_offer_id`,`student_id`),
   KEY `application_student_id_fk` (`student_id`),
   CONSTRAINT `application_internship_offer_id_fk` FOREIGN KEY (`internship_offer_id`) REFERENCES `internship_offer` (`id`),
@@ -63,11 +63,8 @@ CREATE TABLE `company` (
   `phone` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `internships_manager_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `company_email_uindex` (`email`),
-  KEY `company_internships_manager_id_fk` (`internships_manager_id`),
-  CONSTRAINT `company_internships_manager_id_fk` FOREIGN KEY (`internships_manager_id`) REFERENCES `internships_manager` (`id`)
+  UNIQUE KEY `company_email_uindex` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -183,10 +180,10 @@ CREATE TABLE `internship_offer` (
   `catering` tinyint(1) DEFAULT NULL,
   `lodging` tinyint(1) DEFAULT NULL,
   `field` varchar(255) DEFAULT NULL,
-  `representative_id` int NOT NULL,
+  `company_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `internship_offer_representative_id_fk` (`representative_id`),
-  CONSTRAINT `internship_offer_representative_id_fk` FOREIGN KEY (`representative_id`) REFERENCES `representative` (`id`)
+  KEY `internship_offer_company_id_fk` (`company_id`),
+  CONSTRAINT `internship_offer_company_id_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -197,33 +194,6 @@ CREATE TABLE `internship_offer` (
 LOCK TABLES `internship_offer` WRITE;
 /*!40000 ALTER TABLE `internship_offer` DISABLE KEYS */;
 /*!40000 ALTER TABLE `internship_offer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `internships_manager`
---
-
-DROP TABLE IF EXISTS `internships_manager`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `internships_manager` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `internships_manager_email_uindex` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `internships_manager`
---
-
-LOCK TABLES `internships_manager` WRITE;
-/*!40000 ALTER TABLE `internships_manager` DISABLE KEYS */;
-/*!40000 ALTER TABLE `internships_manager` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -254,37 +224,6 @@ LOCK TABLES `language` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `representative`
---
-
-DROP TABLE IF EXISTS `representative`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `representative` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `company_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `representative_email_uindex` (`email`),
-  KEY `representative_company_id_fk` (`company_id`),
-  CONSTRAINT `representative_company_id_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `representative`
---
-
-LOCK TABLES `representative` WRITE;
-/*!40000 ALTER TABLE `representative` DISABLE KEYS */;
-/*!40000 ALTER TABLE `representative` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `school`
 --
 
@@ -297,11 +236,8 @@ CREATE TABLE `school` (
   `phone` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `internships_manager_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `school_email_uindex` (`email`),
-  KEY `school_internships_manager_id_fk` (`internships_manager_id`),
-  CONSTRAINT `school_internships_manager_id_fk` FOREIGN KEY (`internships_manager_id`) REFERENCES `internships_manager` (`id`)
+  UNIQUE KEY `school_email_uindex` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -387,4 +323,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-24 21:23:37
+-- Dump completed on 2021-02-13 20:01:50
