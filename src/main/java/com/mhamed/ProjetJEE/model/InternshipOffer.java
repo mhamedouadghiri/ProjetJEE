@@ -23,5 +23,5 @@ public class InternshipOffer {
     private Boolean catering;
     private Boolean lodging;
     private String field;
-    private Long representativeId;
+    private Long companyId;
 }

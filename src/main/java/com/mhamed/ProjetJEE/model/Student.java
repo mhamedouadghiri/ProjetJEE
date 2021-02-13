@@ -1,11 +1,11 @@
 package com.mhamed.ProjetJEE.model;
 
-import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Student extends User {
     private String firstName;
     private String lastName;
@@ -17,7 +17,9 @@ public class Student extends User {
     private String major;
     private Long schoolId;
 
-    @Builder
+    public Student() {
+    }
+
     public Student(Long id, String email, String password, String phone, String firstName, String lastName, String city, String country, String address, Boolean status, Long schoolYear, String major, Long schoolId) {
         super(id, email, password, phone);
         this.firstName = firstName;

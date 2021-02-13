@@ -16,14 +16,13 @@ public class SchoolDatasource extends UserDatasource implements SchoolDAO {
 
     @Override
     public Long save(School entity) {
-        String query = "insert into school values (null, ?, ?, ?, ?, ?)";
+        String query = "insert into school values (null, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getPhone());
             ps.setString(3, entity.getEmail());
             ps.setString(4, entity.getPassword());
-            ps.setLong(5, entity.getInternshipsManagerId());
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {

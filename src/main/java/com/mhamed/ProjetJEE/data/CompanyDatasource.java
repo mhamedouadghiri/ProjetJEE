@@ -16,7 +16,7 @@ public class CompanyDatasource extends UserDatasource implements CompanyDAO {
 
     @Override
     public Long save(Company entity) {
-        String query = "insert into company values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "insert into company values (null, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getName());
@@ -27,7 +27,6 @@ public class CompanyDatasource extends UserDatasource implements CompanyDAO {
             ps.setString(6, entity.getPhone());
             ps.setString(7, entity.getEmail());
             ps.setString(8, entity.getPassword());
-            ps.setLong(9, entity.getInternshipsManagerId());
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {

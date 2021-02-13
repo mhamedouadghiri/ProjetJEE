@@ -68,62 +68,36 @@ public abstract class UserDatasource implements UserDAO {
         String phone = resultSet.getString("phone");
         String password = resultSet.getString("password");
         switch (userType) {
-            case internships_manager:
-                return InternshipsManager.builder()
-                        .id(id)
-                        .email(email)
-                        .phone(phone)
-                        .password(password)
-                        .name(resultSet.getString("name"))
-                        .build();
             case company:
-                return Company.builder()
-                        .id(id)
-                        .email(email)
-                        .phone(phone)
-                        .password(password)
-                        .name(resultSet.getString("name"))
-                        .description(resultSet.getString("description"))
-                        .city(resultSet.getString("city"))
-                        .country(resultSet.getString("country"))
-                        .address(resultSet.getString("address"))
-                        .internshipsManagerId(resultSet.getLong("internships_manager_id"))
-                        .build();
+                return new Company(id,
+                        email,
+                        password,
+                        phone,
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getString("city"),
+                        resultSet.getString("country"),
+                        resultSet.getString("address"));
             case school:
-                return School.builder()
-                        .id(id)
-                        .email(email)
-                        .phone(phone)
-                        .password(password)
-                        .name(resultSet.getString("name"))
-                        .internshipsManagerId(resultSet.getLong("internships_manager_id"))
-                        .build();
-            case representative:
-                return Representative.builder()
-                        .id(id)
-                        .email(email)
-                        .phone(phone)
-                        .password(password)
-                        .firstName(resultSet.getString("first_name"))
-                        .lastName(resultSet.getString("last_name"))
-                        .companyId(resultSet.getLong("company_id"))
-                        .build();
+                return new School(id,
+                        email,
+                        password,
+                        phone,
+                        resultSet.getString("name"));
             case student:
-                return Student.builder()
-                        .id(id)
-                        .email(email)
-                        .phone(phone)
-                        .password(password)
-                        .firstName(resultSet.getString("first_name"))
-                        .lastName(resultSet.getString("last_name"))
-                        .city(resultSet.getString("city"))
-                        .country(resultSet.getString("country"))
-                        .address(resultSet.getString("address"))
-                        .status(resultSet.getBoolean("status"))
-                        .schoolYear(resultSet.getLong("school_year"))
-                        .major(resultSet.getString("major"))
-                        .schoolId(resultSet.getLong("school_id"))
-                        .build();
+                return new Student(id,
+                        email,
+                        password,
+                        phone,
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("city"),
+                        resultSet.getString("country"),
+                        resultSet.getString("address"),
+                        resultSet.getBoolean("status"),
+                        resultSet.getLong("school_year"),
+                        resultSet.getString("major"),
+                        resultSet.getLong("school_id"));
             default:
                 throw new RuntimeException();
         }
