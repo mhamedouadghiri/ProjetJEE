@@ -46,9 +46,4 @@ UC15 <|-down- UC16
 ET --> UC17
 UC17 <|-- UC18
 UC17 <|-- UC19
-
-
-
-
-
 @enduml

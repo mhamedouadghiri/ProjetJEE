@@ -8,12 +8,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Etudiant from "./components/Etudiant";
 import Entreprise from "./components/Entreprise";
 import CollectData from "./components/CollectData";
+import Test from "./components/Test";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
         <div className="container">
           <div className="wrapper">
             <div className="home">
@@ -26,6 +26,7 @@ function App() {
                 <Route exact path="/etudiant" component={Etudiant} />
                 <Route exact path="/entreprise" component={Entreprise} />
                 <Route exact path="/data" component={CollectData} />
+                <Route exact path="/test" component={Test} />
               </Switch>
             </div>
           </div>
@@ -49,13 +50,16 @@ function Contact() {
 
 function Home() {
   return (
-    <div className="container">
-      <div className="wrapper">
-        <h5>
-          The <b>ECS</b>, is a creative application, makes student easly find a
-          stage, and in the oder side the businesses find also easly the
-          trainees who meet their needs.
-        </h5>
+    <div className="App">
+      <Header />
+      <div className="container">
+        <div className="wrapper">
+          <h5>
+            The <b>ECS</b>, is a creative application, makes student easly find
+            a stage, and in the oder side the businesses find also easly the
+            trainees who meet their needs.
+          </h5>
+        </div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import "./Responsable.css";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { dropInscription, removeInscription } from "./Animations";
+import Header from "./Header";
 
 function Entreprise() {
   //for connection
@@ -99,7 +100,8 @@ function Entreprise() {
   };
 
   return (
-    <>
+    <div className="App">
+      <Header />
       <div className="login">
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREX6wLF2TKTLUlKd0kJeVxB3lxclYa551e6g&usqp=CAU"
@@ -189,7 +191,7 @@ function Entreprise() {
           </Button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
