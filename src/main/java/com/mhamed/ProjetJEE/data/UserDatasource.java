@@ -94,8 +94,8 @@ public abstract class UserDatasource implements UserDAO {
                         resultSet.getString("city"),
                         resultSet.getString("country"),
                         resultSet.getString("address"),
-                        resultSet.getBoolean("status"),
-                        resultSet.getLong("school_year"),
+                        resultSet.getObject("status", Boolean.class),
+                        resultSet.getObject("school_year", Long.class),
                         resultSet.getString("major"),
                         resultSet.getLong("school_id"));
             default:
