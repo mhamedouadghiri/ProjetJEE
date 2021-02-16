@@ -3,10 +3,7 @@ package com.mhamed.ProjetJEE.data;
 import com.mhamed.ProjetJEE.model.Student;
 import com.mhamed.ProjetJEE.model.UserType;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class StudentDatasource extends UserDatasource implements StudentDAO {
 
@@ -27,7 +24,11 @@ public class StudentDatasource extends UserDatasource implements StudentDAO {
             ps.setBoolean(6, entity.getStatus());
             ps.setString(7, entity.getEmail());
             ps.setString(8, entity.getPhone());
-            ps.setLong(9, entity.getSchoolYear());
+            if (entity.getSchoolYear() == null) {
+                ps.setNull(9, Types.BIGINT);
+            } else {
+                ps.setLong(9, entity.getSchoolYear());
+            }
             ps.setString(10, entity.getMajor());
             ps.setString(11, entity.getPassword());
             ps.setLong(12, entity.getSchoolId());

@@ -100,8 +100,6 @@ public class UserService {
         String lastName = formParams.getFirst("last-name");
         String major = formParams.getFirst("major");
 
-        // TODO: schoolId for student
-
         Long savedId;
         User entity;
         switch (userType) {
@@ -123,7 +121,18 @@ public class UserService {
                 if (firstName == null || lastName == null) {
                     return Response.status(Response.Status.BAD_REQUEST).build();
                 }
-                entity = new Student(null, email, password, phone, firstName, lastName, city, country, address, false, 0L, major, 1L);
+                Long schoolYear = null;
+                try {
+                    schoolYear = Long.parseLong(formParams.getFirst("school-year"));
+                } catch (NumberFormatException ignored) {
+                }
+                long schoolId;
+                try {
+                    schoolId = Long.parseLong(formParams.getFirst("school-id"));
+                } catch (NumberFormatException e) {
+                    return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+                entity = new Student(null, email, password, phone, firstName, lastName, city, country, address, false, schoolYear, major, schoolId);
                 savedId = studentDatasource.save((Student) entity);
                 break;
             default:
