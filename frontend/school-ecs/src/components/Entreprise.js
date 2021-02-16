@@ -14,7 +14,7 @@ function Entreprise() {
         message={"Offre de stage"}
       />
       <Post
-        key={1}
+        key={2}
         name={"ENSIAS"}
         email={"Ensias@gmail.com"}
         description={
@@ -23,7 +23,7 @@ function Entreprise() {
         message={"Offre de stage"}
       />
       <Post
-        key={1}
+        key={3}
         name={"ENSIAS"}
         email={"Ensias@gmail.com"}
         description={
@@ -32,7 +32,7 @@ function Entreprise() {
         message={"Offre de stage"}
       />
       <Post
-        key={1}
+        key={4}
         name={"ENSIAS"}
         email={"Ensias@gmail.com"}
         description={
@@ -41,7 +41,7 @@ function Entreprise() {
         message={"Offre de stage"}
       />
       <Post
-        key={1}
+        key={5}
         name={"ENSIAS"}
         email={"Ensias@gmail.com"}
         description={
@@ -50,7 +50,7 @@ function Entreprise() {
         message={"Offre de stage"}
       />
       <Post
-        key={1}
+        key={6}
         name={"ENSIAS"}
         email={"Ensias@gmail.com"}
         description={
