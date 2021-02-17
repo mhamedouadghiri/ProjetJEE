@@ -69,22 +69,25 @@ public class StudentService {
     @Path("/save/education")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response saveEducation(@FormParam("start-date") String startDate,
-                                  @FormParam("end-date") String endDate,
+    public Response saveEducation(@FormParam("start-date") String start,
+                                  @FormParam("end-date") String end,
                                   @FormParam("name") String name,
                                   @FormParam("level") String level,
                                   @FormParam("student-id") Long studentId) {
         if (name == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        LocalDate start = null;
-        LocalDate end = null;
+        LocalDate startDate = null;
+        LocalDate endDate = null;
         try {
-            start = LocalDate.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE);
-            end = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
+            startDate = LocalDate.parse(start, DateTimeFormatter.ISO_LOCAL_DATE);
         } catch (Exception ignored) {
         }
-        Education education = new Education(null, start, end, name, level, studentId);
+        try {
+            endDate = LocalDate.parse(end, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (Exception ignored) {
+        }
+        Education education = new Education(null, startDate, endDate, name, level, studentId);
         Long savedId = educationDatasource.save(education);
         if (savedId != null && savedId > 0L) {
             education.setId(savedId);

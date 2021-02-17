@@ -5,6 +5,7 @@ import com.mhamed.ProjetJEE.model.Experience;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,8 @@ public class ExperienceDatasource extends BaseDatasource<Experience> implements 
                 experiences.add(
                         new Experience(
                                 resultSet.getLong("id"),
-                                resultSet.getDate("start_date").toLocalDate(),
-                                resultSet.getDate("end_date").toLocalDate(),
+                                resultSet.getObject("start_date", LocalDate.class),
+                                resultSet.getObject("end_date", LocalDate.class),
                                 resultSet.getString("description"),
                                 studentId
                         )

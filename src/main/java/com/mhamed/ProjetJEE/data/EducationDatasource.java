@@ -3,6 +3,7 @@ package com.mhamed.ProjetJEE.data;
 import com.mhamed.ProjetJEE.model.Education;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,8 @@ public class EducationDatasource extends BaseDatasource<Education> implements Ed
         String query = "insert into education values (null, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            if (entity.getStartDate() == null) {
-                ps.setNull(1, Types.DATE);
-            } else {
-                ps.setDate(1, Date.valueOf(entity.getStartDate()));
-            }
-            if (entity.getEndDate() == null) {
-                ps.setNull(2, Types.DATE);
-            } else {
-                ps.setDate(2, Date.valueOf(entity.getEndDate()));
-            }
+            ps.setObject(1, entity.getStartDate(), Types.DATE);
+            ps.setObject(2, entity.getEndDate(), Types.DATE);
             ps.setString(3, entity.getName());
             ps.setString(4, entity.getLevel());
             ps.setLong(5, entity.getStudentId());
@@ -59,8 +52,8 @@ public class EducationDatasource extends BaseDatasource<Education> implements Ed
                 educations.add(
                         new Education(
                                 resultSet.getLong("id"),
-                                resultSet.getDate("start_date").toLocalDate(),
-                                resultSet.getDate("end_date").toLocalDate(),
+                                resultSet.getObject("start_date", LocalDate.class),
+                                resultSet.getObject("end_date", LocalDate.class),
                                 resultSet.getString("name"),
                                 resultSet.getString("level"),
                                 studentId
