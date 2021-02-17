@@ -2,11 +2,14 @@ package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Company;
 import com.mhamed.ProjetJEE.model.UserType;
+import com.mhamed.ProjetJEE.util.UserUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompanyDatasource extends UserDatasource implements CompanyDAO {
 
@@ -36,5 +39,20 @@ public class CompanyDatasource extends UserDatasource implements CompanyDAO {
         } catch (SQLException ignored) {
         }
         return null;
+    }
+
+    @Override
+    public List<Company> getAll() {
+        List<Company> companies = new ArrayList<>();
+        String query = "select * from company";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                companies.add(UserUtils.buildCompanyFromResultSet(resultSet));
+            }
+        } catch (SQLException ignored) {
+        }
+        return companies;
     }
 }

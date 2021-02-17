@@ -1,6 +1,7 @@
 package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.*;
+import com.mhamed.ProjetJEE.util.UserUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,41 +64,13 @@ public abstract class UserDatasource implements UserDAO {
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
-        String email = resultSet.getString("email");
-        String phone = resultSet.getString("phone");
-        String password = resultSet.getString("password");
         switch (userType) {
             case company:
-                return new Company(id,
-                        email,
-                        password,
-                        phone,
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("city"),
-                        resultSet.getString("country"),
-                        resultSet.getString("address"));
+                return UserUtils.buildCompanyFromResultSet(resultSet);
             case school:
-                return new School(id,
-                        email,
-                        password,
-                        phone,
-                        resultSet.getString("name"));
+                return UserUtils.buildSchoolFromResultSet(resultSet);
             case student:
-                return new Student(id,
-                        email,
-                        password,
-                        phone,
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("city"),
-                        resultSet.getString("country"),
-                        resultSet.getString("address"),
-                        resultSet.getObject("status", Boolean.class),
-                        resultSet.getObject("school_year", Long.class),
-                        resultSet.getString("major"),
-                        resultSet.getLong("school_id"));
+                return UserUtils.buildStudentFromResultSet(resultSet);
             default:
                 throw new RuntimeException();
         }

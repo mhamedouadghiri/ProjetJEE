@@ -2,8 +2,11 @@ package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Student;
 import com.mhamed.ProjetJEE.model.UserType;
+import com.mhamed.ProjetJEE.util.UserUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDatasource extends UserDatasource implements StudentDAO {
 
@@ -41,5 +44,21 @@ public class StudentDatasource extends UserDatasource implements StudentDAO {
         } catch (SQLException ignored) {
         }
         return null;
+    }
+
+    @Override
+    public List<Student> getStudentsBySchoolId(Long schoolId) {
+        List<Student> students = new ArrayList<>();
+        String query = "select * from student where school_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, schoolId);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                students.add(UserUtils.buildStudentFromResultSet(resultSet));
+            }
+        } catch (SQLException ignored) {
+        }
+        return students;
     }
 }
