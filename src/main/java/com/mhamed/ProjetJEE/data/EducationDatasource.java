@@ -15,6 +15,30 @@ public class EducationDatasource extends BaseDatasource<Education> implements Ed
 
     @Override
     public Long save(Education entity) {
+        String query = "insert into education values (null, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            if (entity.getStartDate() == null) {
+                ps.setNull(1, Types.DATE);
+            } else {
+                ps.setDate(1, Date.valueOf(entity.getStartDate()));
+            }
+            if (entity.getEndDate() == null) {
+                ps.setNull(2, Types.DATE);
+            } else {
+                ps.setDate(2, Date.valueOf(entity.getEndDate()));
+            }
+            ps.setString(3, entity.getName());
+            ps.setString(4, entity.getLevel());
+            ps.setLong(5, entity.getStudentId());
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                }
+            }
+        } catch (SQLException ignored) {
+        }
         return null;
     }
 

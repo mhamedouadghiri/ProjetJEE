@@ -9,6 +9,8 @@ import com.mhamed.ProjetJEE.model.Skill;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Path("/student/")
@@ -61,5 +63,33 @@ public class StudentService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok().entity(skills).build();
+    }
+
+    @POST
+    @Path("/save/education")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response saveEducation(@FormParam("start-date") String startDate,
+                                  @FormParam("end-date") String endDate,
+                                  @FormParam("name") String name,
+                                  @FormParam("level") String level,
+                                  @FormParam("student-id") Long studentId) {
+        if (name == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        LocalDate start = null;
+        LocalDate end = null;
+        try {
+            start = LocalDate.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE);
+            end = LocalDate.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (Exception ignored) {
+        }
+        Education education = new Education(null, start, end, name, level, studentId);
+        Long savedId = educationDatasource.save(education);
+        if (savedId != null && savedId > 0L) {
+            education.setId(savedId);
+            return Response.ok().entity(education).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 }
