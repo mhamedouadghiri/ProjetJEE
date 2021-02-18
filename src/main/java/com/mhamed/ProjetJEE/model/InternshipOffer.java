@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -14,14 +14,12 @@ import java.util.Date;
 public class InternshipOffer {
     private Long id;
     private String title;
-    private Long duration;
-    private Date startDate;
-    private Date endDate;
+    private Integer duration;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String description;
-    private Long pay;
+    private Integer pay;
     private Boolean status;
-    private Boolean catering;
-    private Boolean lodging;
     private String field;
     private Long companyId;
 }
