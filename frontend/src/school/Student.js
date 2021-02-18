@@ -7,6 +7,7 @@ import Header from "react-bootstrap/ModalHeader";
 import Title from "react-bootstrap/ModalTitle";
 import Footer from "react-bootstrap/ModalFooter";
 import Body from "react-bootstrap/ModalBody";
+import { properties } from "../resources/properties";
 
 function Student(props) {
   const [show, setShow] = useState(false);
@@ -44,18 +45,15 @@ function Student(props) {
     ) {
       alert("test");
       console.log(detailsStud);
-      fetch(
-        "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/register-user",
-        {
-          method: "post",
+      fetch(`${properties.url}${properties.registerUser}`, {
+        method: "post",
 
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-          body: formBody,
-        }
-      )
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBody,
+      })
         .then((response) => response.json())
         .then((data) => console.log("the data:", data));
 

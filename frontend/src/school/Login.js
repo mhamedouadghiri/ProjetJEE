@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { dropInscription, removeInscription } from "../components/Animations";
 import Header from "../components/Header";
+import { properties } from "../resources/properties";
 
 function Login({ setToken }) {
   const [email, setEmail] = useState("");
@@ -24,18 +25,15 @@ function Login({ setToken }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email !== "" && password !== "") {
-      fetch(
-        "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/check-user",
-        {
-          method: "POST",
-          //mode: "no-cors",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-          body: formBodyAuth,
-        }
-      )
+      fetch(`${properties.url}${properties.checkUser}`, {
+        method: "POST",
+        //mode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBodyAuth,
+      })
         .then((response) => response.json())
         .then((data) => {
           setToken(data);
@@ -78,18 +76,15 @@ function Login({ setToken }) {
       phone !== ""
     ) {
       alert("dakchi howa hadak");
-      fetch(
-        "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/register-user",
-        {
-          method: "post",
+      fetch(`${properties.url}${properties.registerUser}`, {
+        method: "post",
 
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-          body: formBody,
-        }
-      )
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBody,
+      })
         .then((response) => response.json())
         .then((data) => console.log("the data:", data));
 

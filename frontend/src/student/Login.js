@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Header from "../components/Header";
+import { properties } from "../resources/properties";
 
 function Login({ setToken }) {
   const [email, setEmail] = useState("");
@@ -21,18 +22,15 @@ function Login({ setToken }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email !== "" && password !== "") {
-      fetch(
-        "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/users/auth/check-user",
-        {
-          method: "POST",
-          //mode: "no-cors",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-          body: formBodyAuth,
-        }
-      )
+      fetch(`${properties.url}${properties.checkUser}`, {
+        method: "POST",
+        //mode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBodyAuth,
+      })
         .then((response) => response.json())
         .then((data) => {
           setToken(data);
