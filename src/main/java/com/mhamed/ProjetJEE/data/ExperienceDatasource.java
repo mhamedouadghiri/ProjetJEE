@@ -2,9 +2,7 @@ package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Experience;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +16,21 @@ public class ExperienceDatasource extends BaseDatasource<Experience> implements 
 
     @Override
     public Long save(Experience entity) {
+        String query = "insert into experience values (null, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setObject(1, entity.getStartDate(), Types.DATE);
+            ps.setObject(2, entity.getEndDate(), Types.DATE);
+            ps.setString(3, entity.getDescription());
+            ps.setLong(4, entity.getStudentId());
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                }
+            }
+        } catch (SQLException ignored) {
+        }
         return null;
     }
 

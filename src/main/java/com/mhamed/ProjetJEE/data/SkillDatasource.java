@@ -5,6 +5,7 @@ import com.mhamed.ProjetJEE.model.Skill;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,20 @@ public class SkillDatasource extends BaseDatasource<Skill> implements SkillDAO {
 
     @Override
     public Long save(Skill entity) {
+        String query = "insert into skill values (null, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getLevel());
+            ps.setLong(3, entity.getStudentId());
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                }
+            }
+        } catch (SQLException ignored) {
+        }
         return null;
     }
 

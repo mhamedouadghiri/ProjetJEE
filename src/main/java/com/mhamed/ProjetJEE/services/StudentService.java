@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +93,74 @@ public class StudentService {
         if (savedId != null && savedId > 0L) {
             education.setId(savedId);
             return Response.ok().entity(education).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @POST
+    @Path("/save/experience")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response saveExperience(@FormParam("start-date") String start,
+                                   @FormParam("end-date") String end,
+                                   @FormParam("description") String description,
+                                   @FormParam("student-id") Long studentId) {
+        if (description == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+        try {
+            startDate = new Date(start).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (Exception ignored) {
+        }
+        try {
+            endDate = new Date(end).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (Exception ignored) {
+        }
+        Experience experience = new Experience(null, startDate, endDate, description, studentId);
+        Long savedId = experienceDatasource.save(experience);
+        if (savedId != null && savedId > 0L) {
+            experience.setId(savedId);
+            return Response.ok().entity(experience).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @POST
+    @Path("/save/language")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response saveLanguage(@FormParam("name") String name,
+                                 @FormParam("level") String level,
+                                 @FormParam("student-id") Long studentId) {
+        if (name == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        Language language = new Language(null, name, level, studentId);
+        Long savedId = languageDatasource.save(language);
+        if (savedId != null && savedId > 0L) {
+            language.setId(savedId);
+            return Response.ok().entity(language).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @POST
+    @Path("/save/skill")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response saveSkill(@FormParam("name") String name,
+                              @FormParam("level") String level,
+                              @FormParam("student-id") Long studentId) {
+        if (name == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        Skill skill = new Skill(null, name, level, studentId);
+        Long savedId = skillDatasource.save(skill);
+        if (savedId != null && savedId > 0L) {
+            skill.setId(savedId);
+            return Response.ok().entity(skill).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }

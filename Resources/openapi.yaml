@@ -225,3 +225,79 @@ paths:
           description: "OK"
         400:
           description: "else"
+  /student/save/experience:
+    post:
+      summary: "POST student/save/experience"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                start-date:
+                  type: string
+                  description: "yyyy-MM-dd"
+                end-date:
+                  type: string
+                  description: "yyyy-MM-dd"
+                description:
+                  type: string
+                student-id:
+                  type: integer
+              required:
+                - description
+                - student-id
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"
+  /student/save/language:
+    post:
+      summary: "POST student/save/language"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                level:
+                  type: string
+                student-id:
+                  type: integer
+              required:
+                - name
+                - student-id
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"
+  /student/save/skill:
+    post:
+      summary: "POST student/save/skill"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                level:
+                  type: string
+                student-id:
+                  type: integer
+              required:
+                - name
+                - student-id
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"
