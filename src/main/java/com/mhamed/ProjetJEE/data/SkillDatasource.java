@@ -2,6 +2,12 @@ package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Skill;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SkillDatasource extends BaseDatasource<Skill> implements SkillDAO {
 
     @Override
@@ -17,5 +23,28 @@ public class SkillDatasource extends BaseDatasource<Skill> implements SkillDAO {
     @Override
     public Boolean delete(Long id) {
         return null;
+    }
+
+    @Override
+    public List<Skill> getSkillsByStudentId(Long studentId) {
+        List<Skill> skills = new ArrayList<>();
+        String query = "select * from skill where student_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, studentId);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                skills.add(
+                        new Skill(
+                                resultSet.getLong("id"),
+                                resultSet.getString("name"),
+                                resultSet.getString("level"),
+                                studentId
+                        )
+                );
+            }
+        } catch (SQLException ignored) {
+        }
+        return skills;
     }
 }
