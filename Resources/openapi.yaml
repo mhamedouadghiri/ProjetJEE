@@ -1,0 +1,227 @@
+# https://editor.swagger.io/
+openapi: "3.0.3"
+info:
+  title: "ProjetJEE API"
+  description: "ProjetJEE API"
+  version: "1.0.0"
+servers:
+  - url: "https://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api"
+paths:
+  /users/user/{id}:
+    get:
+      summary: "GET users/user/{id}"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+        - name: "user-type"
+          in: "query"
+          required: true
+          schema:
+            enum:
+              - company
+              - school
+              - student
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad user-type"
+        404:
+          description: "Requested user not found"
+  /users/auth/check-user:
+    post:
+      summary: "POST users/auth/check-user"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                user-type:
+                  enum:
+                    - company
+                    - school
+                    - student
+              required:
+                - email
+                - password
+                - user-type
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad user-type"
+        404:
+          description: "Requested user not found"
+  /users/auth/register-user:
+    post:
+      summary: "POST users/auth/register-user"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                user-type:
+                  enum:
+                    - company
+                    - school
+                    - student
+                phone:
+                  type: string
+                name:
+                  type: string
+                  description: "required if user-type in [company, school]"
+                first-name:
+                  type: string
+                  description: "required if user-type in [student]"
+                last-name:
+                  type: string
+                  description: "required if user-type in [student]"
+                city:
+                  type: string
+                country:
+                  type: string
+                address:
+                  type: string
+                description:
+                  type: string
+                major:
+                  type: string
+                school-year:
+                  type: integer
+                school-id:
+                  type: integer
+                  description: "required if user-type in [student], is FK to school"
+              required:
+                - email
+                - password
+                - user-type
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad request"
+        500:
+          description: "Probably database error... due to bad request..."
+  /school/students/{school-id}:
+    get:
+      summary: "GET school/students/{school-id}"
+      parameters:
+        - name: "school-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /company/all:
+    get:
+      summary: "GET company/all"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /student/educations/{student-id}:
+    get:
+      summary: "GET student/educations/{student-id}"
+      parameters:
+        - name: "student-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /student/experiences/{student-id}:
+    get:
+      summary: "GET student/experiences/{student-id}"
+      parameters:
+        - name: "student-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /student/languages/{student-id}:
+    get:
+      summary: "GET student/languages/{student-id}"
+      parameters:
+        - name: "student-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /student/skills/{student-id}:
+    get:
+      summary: "GET student/skills/{student-id}"
+      parameters:
+        - name: "student-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /student/save/education:
+    post:
+      summary: "POST student/save/education"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                start-date:
+                  type: string
+                  description: "yyyy-MM-dd"
+                end-date:
+                  type: string
+                  description: "yyyy-MM-dd"
+                name:
+                  type: string
+                level:
+                  type: string
+                student-id:
+                  type: integer
+              required:
+                - name
+                - student-id
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"
