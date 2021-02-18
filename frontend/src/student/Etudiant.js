@@ -16,9 +16,9 @@ function Etudiant() {
     <div className="App">
       <HeaderApp setToken={setToken} />
       <div className="app_body">
-        <Sidebar key={token.id} user={token} />
-        <EntrepriseS />
-        <InfoStudent />
+        <Sidebar user={token} />
+        <EntrepriseS user={token} />
+        <InfoStudent user={token} />
       </div>
     </div>
   );

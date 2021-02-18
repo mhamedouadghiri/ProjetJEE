@@ -14,7 +14,7 @@ function Post({ key, name, email, description, message }) {
     <>
       <div className="post">
         <div className="post_header">
-          <Avatar key={2} />
+          <Avatar />
           <div className="post_info">
             <h2>{name}</h2>
             <p>{email}</p>

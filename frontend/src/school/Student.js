@@ -1,5 +1,5 @@
 import Button from "react-bootstrap/Button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AcountStudent from "./AcountStudent";
 import "./Student.css";
 import Modal from "react-bootstrap/Modal";
@@ -10,6 +10,20 @@ import Body from "react-bootstrap/ModalBody";
 import { properties } from "../resources/properties";
 
 function Student(props) {
+  let [students, setStudents] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    if (!refresh) {
+      fetch(`${properties.url}${properties.students}${props.token.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setStudents(data);
+          setRefresh(true);
+          console.log(data);
+        });
+    }
+  }, [refresh]);
+
   const [show, setShow] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -55,7 +69,10 @@ function Student(props) {
         body: formBody,
       })
         .then((response) => response.json())
-        .then((data) => console.log("the data:", data));
+        .then((data) => {
+          console.log("the data:", data);
+          setRefresh(false);
+        });
 
       setPassword2("");
       setPassword1("");
@@ -72,24 +89,23 @@ function Student(props) {
   return (
     <div className="student">
       <div className="students">
-        <AcountStudent name={"lotfi"} email={"ayoub@gmail.com"} />
-        <AcountStudent name={"Sefian"} email={"Sefian@gmail.com"} />
-        <AcountStudent name={"Oubaamrane"} email={"Ouba@gmail.com"} />
-        <AcountStudent name={"Amine"} email={"amine@gmail.com"} />
-        <AcountStudent name={"Mohammed"} email={"Medlotfi96@gmail.com"} />
-        <AcountStudent name={"Doha"} email={"Doha@gmail.com"} />
-        <AcountStudent name={"Ikram"} email={"ikram@gmail.com"} />
-        <AcountStudent name={"Ikhlass"} email={"ikhlass@gmail.com"} />
-        <AcountStudent name={"Amine"} email={"AmineJamai@gmail.com"} />
-        <AcountStudent name={"lotfi"} email={"ayoub@gmail.com"} />
-        <AcountStudent name={"lotfi"} email={"ayoub@gmail.com"} />
-        <AcountStudent name={"lotfi"} email={"ayoub@gmail.com"} />
+        {students
+          ? students.map((student) => (
+              <AcountStudent
+                key={student.id}
+                lastName={student.lastName}
+                firstName={student.firstName}
+                email={student.email}
+              />
+            ))
+          : "Loading data.."}
       </div>
       <div className="creatstudent">
         <Button onClick={handleShow} className="btn btn-warning">
           créer un Student
         </Button>
       </div>
+      {/* Insértion d'un étudiant dans une école */}
       <Modal centered show={show} onHide={handleClose} animation={false}>
         <Header closeButton>
           <Title>Ajouter Un étudiant</Title>

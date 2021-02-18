@@ -1,63 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import "./EntrepriseS.css";
+import { properties } from "../resources/properties";
 function EntrepriseS() {
+  const [posts, setPosts] = useState(null);
+  useEffect(() => {
+    if (!posts) {
+      fetch(`${properties.url}${properties.company}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setPosts(data);
+          console.log(data);
+        });
+    }
+  }, [posts]);
   return (
-    <div className="entreprise">
-      <Post
-        key={1}
-        name={"ENSIAS"}
-        email={"Ensias@gmail.com"}
-        description={
-          "Nous recrutons pour un stage pré-embauche rémunéré un Développeur Python, Odoo, JavaScriptjhazkjdhakjzhdkjazhdkjazhdkajzhdkajzhdkajzdhakzjdhkazjhdkazjhdkajdhkajzhdkajdhkjazdhjahzdlkjhalzkjdlakdjalkjlakzdjlazkdjlakzjdlakj"
-        }
-        message={"Offre de stage"}
-      />
-      <Post
-        key={2}
-        name={"ENSIAS"}
-        email={"Ensias@gmail.com"}
-        description={
-          "Nous recrutons pour un stage pré-embauche rémunéré un Développeur Python, Odoo, JavaScript"
-        }
-        message={"Offre de stage"}
-      />
-      <Post
-        key={3}
-        name={"ENSIAS"}
-        email={"Ensias@gmail.com"}
-        description={
-          "Nous recrutons pour un stage pré-embauche rémunéré un Développeur Python, Odoo, JavaScript"
-        }
-        message={"Offre de stage"}
-      />
-      <Post
-        key={4}
-        name={"ENSIAS"}
-        email={"Ensias@gmail.com"}
-        description={
-          "Nous recrutons pour un stage pré-embauche rémunéré un Développeur Python, Odoo, JavaScript"
-        }
-        message={"Offre de stage"}
-      />
-      <Post
-        key={5}
-        name={"ENSIAS"}
-        email={"Ensias@gmail.com"}
-        description={
-          "Nous recrutons pour un stage pré-embauche rémunéré un Développeur Python, Odoo, JavaScript"
-        }
-        message={"Offre de stage"}
-      />
-      <Post
-        key={6}
-        name={"ENSIAS"}
-        email={"Ensias@gmail.com"}
-        description={
-          "Nous recrutons pour un stage pré-embauche rémunéré un Développeur Python, Odoo, JavaScript"
-        }
-        message={"Offre de stage"}
-      />
+    <div className="entrepriseS">
+      {posts
+        ? posts.map((post) => (
+            <Post
+              key={post.id}
+              name={post.name}
+              email={post.email}
+              description={"L'offre de l'entreprise qui va être afficher ici "}
+              message="Offre de Stage"
+            />
+          ))
+        : "Loading data.."}
     </div>
   );
 }
