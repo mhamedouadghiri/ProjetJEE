@@ -10,7 +10,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Path("/student/")
@@ -80,11 +82,11 @@ public class StudentService {
         LocalDate startDate = null;
         LocalDate endDate = null;
         try {
-            startDate = LocalDate.parse(start, DateTimeFormatter.ISO_LOCAL_DATE);
+            startDate = new Date(start).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (Exception ignored) {
         }
         try {
-            endDate = LocalDate.parse(end, DateTimeFormatter.ISO_LOCAL_DATE);
+            endDate = new Date(end).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (Exception ignored) {
         }
         Education education = new Education(null, startDate, endDate, name, level, studentId);
