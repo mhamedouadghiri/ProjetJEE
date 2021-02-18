@@ -301,3 +301,59 @@ paths:
           description: "OK"
         400:
           description: "else"
+  /company/offers/{company-id}:
+    get:
+      summary: "GET company/offers/{company-id}"
+      parameters:
+        - name: "company-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "else"
+  /offer/save:
+    post:
+      summary: "POST offer/save"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                status:
+                  type: boolean
+                  default: true
+                company-id:
+                  type: integer
+                duration:
+                  type: integer
+                start-date:
+                  type: string
+                  description: "yyyy-MM-dd"
+                end-date:
+                  type: string
+                  description: "yyyy-MM-dd"
+                description:
+                  type: string
+                pay:
+                  type: integer
+                field:
+                  type: string
+              required:
+                - title
+                - status
+                - company-id
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad request"
+        500:
+          description: "Probably database error... due to bad request..."
