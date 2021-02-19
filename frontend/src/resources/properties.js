@@ -5,5 +5,7 @@ export const properties = {
   company: "company/all",
   students: "school/students/",
   educations: "student/save/education",
+  skills: "student/save/skill",
   StudentEducation: "student/educations/",
+  StudentSkill: "student/skills/",
 };

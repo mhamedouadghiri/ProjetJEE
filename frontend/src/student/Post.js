@@ -5,7 +5,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-function Post({ key, name, email, description, message }) {
+function Post({ name, email, description, message }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

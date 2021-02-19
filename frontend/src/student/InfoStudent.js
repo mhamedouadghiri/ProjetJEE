@@ -6,9 +6,12 @@ import Modal from "react-bootstrap/Modal";
 import { properties } from "../resources/properties";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import RecentItem from "./RecentItem";
 
 function InfoStudent({ user }) {
-  let [educations, setEducations] = useState(null);
+  const [educations, setEducations] = useState(null);
+  const [skills, setSkills] = useState(null);
+
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     if (!refresh) {
@@ -17,22 +20,68 @@ function InfoStudent({ user }) {
         .then((data) => {
           setEducations(data);
           setRefresh(true);
-          console.log(data);
+          //console.log(data);
+        });
+      fetch(`${properties.url}${properties.StudentSkill}${user.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setSkills(data);
+          setRefresh(true);
+          //console.log(data);
         });
     }
   }, [refresh]);
 
-  const recentItem = (topic) => (
-    <div className="sidebar__recentItem">
-      <span className="sidebar__hash">#</span>
-      <p>{topic}</p>
-    </div>
-  );
+  // const recentItem = (topic) => (
+  //   <div className="sidebar__recentItem">
+  //     <span className="sidebar__hash">#</span>
+  //     <p>{topic}</p>
+  //   </div>
+  // );
   //pour les skills
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [nameskill, setNameskill] = useState("");
+  const [levelskill, setLevelskill] = useState("");
+  let detailsSkill = {
+    name: nameskill,
+    level: levelskill,
+    "student-id": user.id,
+  };
+  let formBodySkill = [];
+  for (let property in detailsSkill) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(detailsSkill[property]);
+    formBodySkill.push(encodedKey + "=" + encodedValue);
+  }
+  formBodySkill = formBodySkill.join("&");
 
+  const handleSubmitSkill = (e) => {
+    e.preventDefault();
+    if (nameskill !== "" && levelskill !== "") {
+      fetch(`${properties.url}${properties.skills}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBodySkill,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setRefresh(false);
+          //console.log(data);
+        });
+      setNameskill("");
+      setLevelskill("");
+
+      handleClose();
+    } else {
+      alert("you have to right your email and your password please");
+    }
+    console.log(detailsSkill);
+  };
   //pour les educations
   const [showL, setShowL] = useState(false);
   const handleCloseL = () => setShowL(false);
@@ -71,8 +120,8 @@ function InfoStudent({ user }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           setRefresh(false);
+          //console.log(data);
         });
       setName("");
       setLevel("");
@@ -82,18 +131,17 @@ function InfoStudent({ user }) {
     } else {
       alert("you have to right your email and your password please");
     }
-    console.log(detailsEduc);
+    //console.log(detailsEduc);
   };
   return (
     <>
       <div className="infoTest">
         <div className="sidebar__bottom">
           <p>Skills</p>
-          {recentItem("PHP")}
-          {recentItem("JavaSript")}
-          {recentItem("Java")}
-          {recentItem("React")}
-          {recentItem("Git")}
+          {skills
+            ? skills.map((skill) => <RecentItem key={skill.id} topic={skill} />)
+            : "Update your profile.."}
+
           <div className="ajoutInfo">
             <Button onClick={handleShow} variant="light">
               Ajouter
@@ -103,7 +151,9 @@ function InfoStudent({ user }) {
         <div className="sidebar__bottom">
           <p>Education</p>
           {educations
-            ? educations.map((education) => recentItem(education.name))
+            ? educations.map((education) => (
+                <RecentItem key={education.id} topic={education} />
+              ))
             : "Update your profile.."}
 
           <div className="ajoutInfo">
@@ -118,19 +168,44 @@ function InfoStudent({ user }) {
         <Modal.Header closeButton>
           <Modal.Title>New Skill</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Im waiting for Mister Sefian to tell me which data must be sended to
-          the backend.
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <form onSubmit={handleSubmitSkill}>
+          <Modal.Body>
+            <div className="firstPart">
+              <div>
+                <label>Skill Name :</label>
+                <input
+                  value={nameskill}
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) => {
+                    setNameskill(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <label>skill level :</label>
+                <input
+                  value={levelskill}
+                  type="text"
+                  placeholder="Level"
+                  onChange={(e) => {
+                    setLevelskill(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button type="submit" variant="primary">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
+
       {/* pour les educations */}
       <Modal centered show={showL} onHide={handleCloseL}>
         <Modal.Header closeButton>
