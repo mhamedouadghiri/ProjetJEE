@@ -25,9 +25,8 @@ DROP TABLE IF EXISTS `application`;
 CREATE TABLE `application` (
   `internship_offer_id` int NOT NULL,
   `student_id` int NOT NULL,
-  `candidate_picture` blob,
   `cover_letter` text,
-  `request` tinyint(1) NOT NULL,
+  `request` tinyint(1) DEFAULT NULL,
   `answer` tinyint(1) DEFAULT NULL,
   `result` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`internship_offer_id`,`student_id`),
@@ -36,15 +35,6 @@ CREATE TABLE `application` (
   CONSTRAINT `application_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `application`
---
-
-LOCK TABLES `application` WRITE;
-/*!40000 ALTER TABLE `application` DISABLE KEYS */;
-/*!40000 ALTER TABLE `application` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `company`
@@ -65,17 +55,8 @@ CREATE TABLE `company` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `company_email_uindex` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `company`
---
-
-LOCK TABLES `company` WRITE;
-/*!40000 ALTER TABLE `company` DISABLE KEYS */;
-/*!40000 ALTER TABLE `company` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `education`
@@ -94,17 +75,8 @@ CREATE TABLE `education` (
   PRIMARY KEY (`id`),
   KEY `education_student_id_fk` (`student_id`),
   CONSTRAINT `education_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `education`
---
-
-LOCK TABLES `education` WRITE;
-/*!40000 ALTER TABLE `education` DISABLE KEYS */;
-/*!40000 ALTER TABLE `education` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `experience`
@@ -122,17 +94,8 @@ CREATE TABLE `experience` (
   PRIMARY KEY (`id`),
   KEY `experience_student_id_fk` (`student_id`),
   CONSTRAINT `experience_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `experience`
---
-
-LOCK TABLES `experience` WRITE;
-/*!40000 ALTER TABLE `experience` DISABLE KEYS */;
-/*!40000 ALTER TABLE `experience` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `internship`
@@ -153,15 +116,6 @@ CREATE TABLE `internship` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `internship`
---
-
-LOCK TABLES `internship` WRITE;
-/*!40000 ALTER TABLE `internship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `internship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `internship_offer`
 --
 
@@ -177,24 +131,13 @@ CREATE TABLE `internship_offer` (
   `description` varchar(255) DEFAULT NULL,
   `pay` int DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
-  `catering` tinyint(1) DEFAULT NULL,
-  `lodging` tinyint(1) DEFAULT NULL,
   `field` varchar(255) DEFAULT NULL,
   `company_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `internship_offer_company_id_fk` (`company_id`),
   CONSTRAINT `internship_offer_company_id_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=302 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `internship_offer`
---
-
-LOCK TABLES `internship_offer` WRITE;
-/*!40000 ALTER TABLE `internship_offer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `internship_offer` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `language`
@@ -211,17 +154,8 @@ CREATE TABLE `language` (
   PRIMARY KEY (`id`),
   KEY `language_student_id_fk` (`student_id`),
   CONSTRAINT `language_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `language`
---
-
-LOCK TABLES `language` WRITE;
-/*!40000 ALTER TABLE `language` DISABLE KEYS */;
-/*!40000 ALTER TABLE `language` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `school`
@@ -238,17 +172,8 @@ CREATE TABLE `school` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `school_email_uindex` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `school`
---
-
-LOCK TABLES `school` WRITE;
-/*!40000 ALTER TABLE `school` DISABLE KEYS */;
-/*!40000 ALTER TABLE `school` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `skill`
@@ -265,17 +190,8 @@ CREATE TABLE `skill` (
   PRIMARY KEY (`id`),
   KEY `skill_student_id_fk` (`student_id`),
   CONSTRAINT `skill_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=502 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `skill`
---
-
-LOCK TABLES `skill` WRITE;
-/*!40000 ALTER TABLE `skill` DISABLE KEYS */;
-/*!40000 ALTER TABLE `skill` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `student`
@@ -302,17 +218,8 @@ CREATE TABLE `student` (
   UNIQUE KEY `student_email_uindex` (`email`),
   KEY `student_school_id_fk` (`school_id`),
   CONSTRAINT `student_school_id_fk` FOREIGN KEY (`school_id`) REFERENCES `school` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=415 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `student`
---
-
-LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -323,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-13 20:01:50
+-- Dump completed on 2021-02-20 13:25:29

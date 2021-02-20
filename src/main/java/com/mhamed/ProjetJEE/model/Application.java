@@ -12,9 +12,14 @@ import lombok.NoArgsConstructor;
 public class Application {
     private Long internshipOfferId;
     private Long studentId;
-    private Byte[] candidatePicture;
     private String coverLetter;
-    private Boolean request;
-    private Boolean answer;
-    private Boolean result;
+    private Boolean request;  // company's call for interview
+    private Boolean answer;  // student's answer
+    private Boolean result;  // result of the interview, on true creation of Internship entity
+
+    public Application(Long internshipOfferId, Long studentId, String coverLetter) {
+        this.internshipOfferId = internshipOfferId;
+        this.studentId = studentId;
+        this.coverLetter = coverLetter;
+    }
 }
