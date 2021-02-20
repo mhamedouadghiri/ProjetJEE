@@ -357,3 +357,60 @@ paths:
           description: "Bad request"
         500:
           description: "Probably database error... due to bad request..."
+  /student/apply:
+    post:
+      summary: "POST student/apply"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                student-id:
+                  type: integer
+                offer-id:
+                  type: integer
+                cover-letter:
+                  type: string
+              required:
+                - student-id
+                - offer-id
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"
+  /application/{offer-id}:
+    get:
+      summary: "GET application/{offer-id}"
+      parameters:
+        - name: "offer-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"
+  /application/{offer-id}/{student-id}:
+    get:
+      summary: "GET application/{offer-id}/{student-id}"
+      parameters:
+        - name: "offer-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+        - name: "student-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "else"

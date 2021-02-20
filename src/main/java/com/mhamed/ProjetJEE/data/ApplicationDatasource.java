@@ -2,16 +2,13 @@ package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Application;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ApplicationDatasource extends BaseDatasource<Application> implements ApplicationDAO {
+public class ApplicationDatasource implements ApplicationDAO {
 
-    @Override
-    public Application get(Long id) {
-        return null;
-    }
+    protected static Connection connection = JDBCConnection.getConnection();
 
     /**
      * @param entity candidate application
@@ -34,7 +31,44 @@ public class ApplicationDatasource extends BaseDatasource<Application> implement
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public List<Application> getApplicationsByOfferId(Long offerId) {
+        List<Application> applications = new ArrayList<>();
+        String query = "select * from application where internship_offer_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, offerId);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                applications.add(
+                        new Application(
+                                resultSet.getLong("internship_offer_id"),
+                                resultSet.getLong("student_id"),
+                                resultSet.getString("cover_letter")
+                        )
+                );
+            }
+        } catch (SQLException ignored) {
+        }
+        return applications;
+    }
+
+    @Override
+    public Application getApplicationByOfferIdAndStudentId(Long offerId, Long studentId) {
+        String query = "select * from application where internship_offer_id = ? and student_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, offerId);
+            ps.setLong(2, studentId);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return new Application(
+                        resultSet.getLong("internship_offer_id"),
+                        resultSet.getLong("student_id"),
+                        resultSet.getString("cover_letter")
+                );
+            }
+        } catch (SQLException ignored) {
+        }
         return null;
     }
 }

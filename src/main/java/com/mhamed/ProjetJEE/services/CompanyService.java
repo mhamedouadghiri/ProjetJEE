@@ -42,6 +42,4 @@ public class CompanyService {
         }
         return Response.ok().entity(offers).build();
     }
-
-
 }
