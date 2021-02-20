@@ -1,0 +1,24 @@
+# IntelliJ
+.idea/
+/intellij
+*.iml
+*.iws
+/*.ipr
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# Maven
+target/
+log/
+
+# git
+.git/
+*.md
+
+# custom
+frontend*/
+Resources/
+

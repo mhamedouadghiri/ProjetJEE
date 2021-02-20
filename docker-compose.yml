@@ -1,0 +1,60 @@
+version: '3.8'
+
+volumes:
+  db_data: { }
+
+networks:
+  ecs_net:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+services:
+  # Backend
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mhamedouadghiri/ecs_back
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db
+    networks:
+      ecs_net:
+        ipv4_address: 172.20.0.10
+
+  # Frontend
+  front:
+    build:
+      context: frontend/
+      dockerfile: Dockerfile
+    image: mhamedouadghiri/ecs_front
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - back
+    networks:
+      ecs_net:
+        ipv4_address: 172.20.0.20
+
+  # Database
+  db:
+    image: mysql:8.0.21
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jee
+      MYSQL_PASSWORD: jee.mysql
+      MYSQL_DATABASE: jee
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/1init.sql
+      - ./Resources/dump.sql:/docker-entrypoint-initdb.d/2dump.sql
+    networks:
+      ecs_net:
+        ipv4_address: 172.20.0.30
