@@ -1,8 +1,12 @@
 package com.mhamed.ProjetJEE.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mhamed.ProjetJEE.data.ApplicationDAO;
 import com.mhamed.ProjetJEE.data.ApplicationDatasource;
 import com.mhamed.ProjetJEE.model.Application;
+import com.mhamed.ProjetJEE.util.StudentUtils;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -31,11 +35,25 @@ public class ApplicationService {
     @GET
     @Path("/{offer-id}/{student-id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStudentApplicationToOffer(@PathParam("offer-id") Long offerId,
-                                                 @PathParam("student-id") Long studentId) {
+    public Response getApplicationAndStudentInfoRegardingOffer(@PathParam("offer-id") Long offerId,
+                                                               @PathParam("student-id") Long studentId) {
         Application application = applicationDatasource.getApplicationByOfferIdAndStudentId(offerId, studentId);
         if (application != null) {
-            return Response.ok().entity(application).build();
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+
+                JsonNode applicationNode = mapper.convertValue(application, JsonNode.class);
+                ObjectNode jsonNode = applicationNode.deepCopy();
+
+                ObjectNode studentInfo = StudentUtils.studentInfoAsObjectNode(studentId);
+                jsonNode.set("studentInfo", studentInfo);
+
+                String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode);
+
+                return Response.ok().entity(json).build();
+            } catch (Exception ignored) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }

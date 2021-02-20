@@ -301,6 +301,20 @@ paths:
           description: "OK"
         400:
           description: "else"
+  /student/all-info/{student-id}:
+    get:
+      summary: "GET student/all-info/{student-id}"
+      parameters:
+        - name: "student-id"
+          in: "path"
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "else"
   /company/offers/{company-id}:
     get:
       summary: "GET company/offers/{company-id}"
@@ -413,4 +427,6 @@ paths:
         200:
           description: "OK"
         400:
-          description: "else"
+          description: "application not found"
+        500:
+          description: "probably json deserialization issue"

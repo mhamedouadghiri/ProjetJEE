@@ -1,7 +1,10 @@
 package com.mhamed.ProjetJEE.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mhamed.ProjetJEE.data.*;
 import com.mhamed.ProjetJEE.model.*;
+import com.mhamed.ProjetJEE.util.StudentUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,6 +21,7 @@ public class StudentService {
     private static final ExperienceDAO experienceDatasource = new ExperienceDatasource();
     private static final LanguageDAO languageDatasource = new LanguageDatasource();
     private static final SkillDAO skillDatasource = new SkillDatasource();
+
     private static final ApplicationDAO applicationDatasource = new ApplicationDatasource();
 
     @GET
@@ -46,11 +50,11 @@ public class StudentService {
     @Path("/languages/{student-id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLanguages(@PathParam("student-id") Long studentId) {
-        List<Language> languageList = languageDatasource.getLanguagesByStudentId(studentId);
-        if (languageList == null || languageList.isEmpty()) {
+        List<Language> languages = languageDatasource.getLanguagesByStudentId(studentId);
+        if (languages == null || languages.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(languageList).build();
+        return Response.ok().entity(languages).build();
     }
 
     @GET
@@ -62,6 +66,19 @@ public class StudentService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok().entity(skills).build();
+    }
+
+    @GET
+    @Path("/all-info/{student-id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllInfo(@PathParam("student-id") Long studentId) {
+        try {
+            ObjectNode studentInfo = StudentUtils.studentInfoAsObjectNode(studentId);
+            String json = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(studentInfo);
+            return Response.ok().entity(json).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @POST
