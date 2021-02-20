@@ -1,10 +1,7 @@
 package com.mhamed.ProjetJEE.services;
 
 import com.mhamed.ProjetJEE.data.*;
-import com.mhamed.ProjetJEE.model.Education;
-import com.mhamed.ProjetJEE.model.Experience;
-import com.mhamed.ProjetJEE.model.Language;
-import com.mhamed.ProjetJEE.model.Skill;
+import com.mhamed.ProjetJEE.model.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,6 +18,7 @@ public class StudentService {
     private static final ExperienceDAO experienceDatasource = new ExperienceDatasource();
     private static final LanguageDAO languageDatasource = new LanguageDatasource();
     private static final SkillDAO skillDatasource = new SkillDatasource();
+    private static final ApplicationDAO applicationDatasource = new ApplicationDatasource();
 
     @GET
     @Path("/educations/{student-id}")
@@ -161,6 +159,21 @@ public class StudentService {
         if (savedId != null && savedId > 0L) {
             skill.setId(savedId);
             return Response.ok().entity(skill).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @POST
+    @Path("/apply")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response apply(@FormParam("student-id") Long studentId,
+                          @FormParam("offer-id") Long offerId,
+                          @FormParam("cover-letter") String coverLetter) {
+        Application application = new Application(offerId, studentId, coverLetter);
+        Long savedId = applicationDatasource.save(application);
+        if (savedId != null && savedId == 951753852456L) { // check Application DAO implementation
+            return Response.ok().build();
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
