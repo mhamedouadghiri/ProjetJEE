@@ -12,9 +12,6 @@ networks:
 services:
   # Backend
   back:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: mhamedouadghiri/ecs_back
     ports:
       - "8080:8080"
@@ -27,9 +24,6 @@ services:
 
   # Frontend
   front:
-    build:
-      context: frontend/
-      dockerfile: Dockerfile
     image: mhamedouadghiri/ecs_front
     ports:
       - "80:80"
