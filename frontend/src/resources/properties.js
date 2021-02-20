@@ -6,6 +6,8 @@ export const properties = {
   students: "school/students/",
   educations: "student/save/education",
   skills: "student/save/skill",
+  languages: "student/save/language",
   StudentEducation: "student/educations/",
   StudentSkill: "student/skills/",
+  StudentLanguage: "student/languages/",
 };

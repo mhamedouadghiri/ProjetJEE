@@ -1,14 +1,29 @@
 import { Avatar } from "@material-ui/core";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 import SchoolIcon from "@material-ui/icons/School";
+import LanguageIcon from "@material-ui/icons/Language";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import image from "../images/Lotfi.jpeg";
 import Modal from "react-bootstrap/Modal";
+import { properties } from "../resources/properties";
 
 function Sidebar(props) {
+  const [refresh, setRefresh] = useState(false);
+  const [languages, setLanguage] = useState(null);
+  useEffect(() => {
+    if (!refresh) {
+      fetch(`${properties.url}${properties.StudentLanguage}${props.user.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setLanguage(data);
+          setRefresh(true);
+        });
+    }
+  }, [refresh, languages]);
+
   //pour les experiences
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -18,6 +33,45 @@ function Sidebar(props) {
   const handleCloseL = () => setShowL(false);
   const handleShowL = () => setShowL(true);
 
+  const [namelangue, setNamelangue] = useState("");
+  const [levellangue, setLevellangue] = useState("");
+  let detailslangue = {
+    name: namelangue,
+    level: levellangue,
+    "student-id": props.user.id,
+  };
+  let formBodylangue = [];
+  for (let property in detailslangue) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(detailslangue[property]);
+    formBodylangue.push(encodedKey + "=" + encodedValue);
+  }
+  formBodylangue = formBodylangue.join("&");
+
+  const handleSubmitLangue = (e) => {
+    e.preventDefault();
+    if (namelangue !== "" && levellangue !== "") {
+      fetch(`${properties.url}${properties.languages}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBodylangue,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setRefresh(false);
+          console.log(data);
+        });
+      setNamelangue("");
+      setLevellangue("");
+
+      handleCloseL();
+    } else {
+      alert("you have to right your email and your password please");
+    }
+  };
   const recentItem = (topic, icon) => (
     <div className="sidebar__recentItem">
       <span className="sidebar__hash">{icon}</span>
@@ -59,11 +113,11 @@ function Sidebar(props) {
         </div>
         <div className="sidebar__bottom">
           <p>Langues</p>
-
-          {recentItem("Français", <BusinessCenterIcon />)}
-
-          {recentItem("Anglais", <SchoolIcon />)}
-          {recentItem("Arabe", <SchoolIcon />)}
+          {languages
+            ? languages.map((language) =>
+                recentItem(language.name, <LanguageIcon />)
+              )
+            : "Update your profile.."}
           <div className="ajoutInfo">
             <Button onClick={handleShowL} variant="light">
               Ajouter
@@ -89,23 +143,48 @@ function Sidebar(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+
       {/* pour les langues */}
       <Modal centered show={showL} onHide={handleCloseL}>
         <Modal.Header closeButton>
           <Modal.Title>Nouvelle Langues </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Im waiting for Mister Sefian to tell me which data must be sended to
-          the backend.
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseL}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleCloseL}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <form onSubmit={handleSubmitLangue}>
+          <Modal.Body>
+            <div className="firstPart">
+              <div>
+                <label>Langue Name :</label>
+                <input
+                  value={namelangue}
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) => {
+                    setNamelangue(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <label>Langue level :</label>
+                <input
+                  value={levellangue}
+                  type="text"
+                  placeholder="Level"
+                  onChange={(e) => {
+                    setLevellangue(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseL}>
+              Close
+            </Button>
+            <Button type="submit" variant="primary">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     </>
   );

@@ -32,12 +32,6 @@ function InfoStudent({ user }) {
     }
   }, [refresh]);
 
-  // const recentItem = (topic) => (
-  //   <div className="sidebar__recentItem">
-  //     <span className="sidebar__hash">#</span>
-  //     <p>{topic}</p>
-  //   </div>
-  // );
   //pour les skills
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
