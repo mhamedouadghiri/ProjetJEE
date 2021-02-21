@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build frontend --file Dockerfile --tag ecs_front:latest
+      run: docker build -t mhamedouadghiri/ecs_front:latest frontend
