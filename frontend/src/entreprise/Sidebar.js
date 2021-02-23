@@ -12,7 +12,6 @@ function Sidebar(props) {
       <p>{topic}</p>
     </div>
   );
-
   return (
     <div className="sidebar">
       <div className="sidebar__top">
@@ -34,11 +33,11 @@ function Sidebar(props) {
 
       <div className="sidebar__bottom">
         <p>Comptes</p>
-        <Link to="/responsable/entreprise">
-          {recentItem("EntrepriseInterships", <BusinessCenterIcon />)}
+        <Link to="/entreprise">
+          {recentItem("InternshipOffers", <BusinessCenterIcon />)}
         </Link>
-        <Link to="/responsable/student">
-          {recentItem("Etudiant", <SchoolIcon />)}
+        <Link to="/entreprise/candidature">
+          {recentItem("TheCandidatures", <SchoolIcon />)}
         </Link>
       </div>
     </div>

@@ -212,7 +212,7 @@ function Sidebar(props) {
                 />
               </div>
               <div>
-                <label>start date: </label>
+                <label>end date: </label>
                 <DatePicker
                   selected={edate}
                   onChange={(date) => setEdate(date)}
