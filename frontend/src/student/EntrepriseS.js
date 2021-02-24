@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import "./EntrepriseS.css";
 import { properties } from "../resources/properties";
-function EntrepriseS() {
+function EntrepriseS({ user }) {
   const [posts, setPosts] = useState(null);
   useEffect(() => {
     if (!posts) {
@@ -18,13 +18,7 @@ function EntrepriseS() {
     <div className="entrepriseS">
       {posts
         ? posts.map((post) => (
-            <Post
-              key={post.id}
-              name={post.name}
-              email={post.email}
-              description={"L'offre de l'entreprise qui va être afficher ici "}
-              message="Offre de Stage"
-            />
+            <Post key={post.id} company={post} userId={user.id} />
           ))
         : "Loading data.."}
     </div>

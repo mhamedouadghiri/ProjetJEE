@@ -14,4 +14,5 @@ export const properties = {
   StudentSkill: "student/skills/",
   StudentLanguage: "student/languages/",
   StudentExperience: "student/experiences/",
+  studentapply: "student/apply",
 };

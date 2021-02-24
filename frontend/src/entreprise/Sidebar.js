@@ -1,7 +1,6 @@
 import { Avatar } from "@material-ui/core";
 import React from "react";
 import "./Sidebar.css";
-import SchoolIcon from "@material-ui/icons/School";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import image from "../images/Lotfi.jpeg";
 import { Link } from "react-router-dom";
@@ -35,9 +34,6 @@ function Sidebar(props) {
         <p>Comptes</p>
         <Link to="/entreprise">
           {recentItem("InternshipOffers", <BusinessCenterIcon />)}
-        </Link>
-        <Link to="/entreprise/candidature">
-          {recentItem("TheCandidatures", <SchoolIcon />)}
         </Link>
       </div>
     </div>

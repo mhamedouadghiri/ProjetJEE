@@ -45,3 +45,8 @@
 .inputOption > h5 {
   margin-left: 5px;
 }
+.offrecompany {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 10px;
+}
