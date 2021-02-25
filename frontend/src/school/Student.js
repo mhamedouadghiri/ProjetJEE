@@ -89,16 +89,18 @@ function Student(props) {
   return (
     <div className="student">
       <div className="students">
-        {students
-          ? students.map((student) => (
-              <AcountStudent
-                key={student.id}
-                lastName={student.lastName}
-                firstName={student.firstName}
-                email={student.email}
-              />
-            ))
-          : "Loading data.."}
+        {students ? (
+          students.map((student) => (
+            <AcountStudent
+              key={student.id}
+              lastName={student.lastName}
+              firstName={student.firstName}
+              email={student.email}
+            />
+          ))
+        ) : (
+          <div className="updating">No student enrolled</div>
+        )}
       </div>
       <div className="creatstudent">
         <Button onClick={handleShow} className="btn btn-warning">

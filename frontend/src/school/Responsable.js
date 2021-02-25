@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import HeaderApp from "../components/HeaderApp";
 import Sidebar from "./Sidebar";
-
+import Offre from "./Offre";
 import Student from "./Student";
 import Entreprise from "./Entreprise";
 
@@ -25,7 +25,12 @@ function Responsable() {
             <Route
               exact
               path="/responsable/entreprise"
-              component={Entreprise}
+              render={(props) => <Entreprise user={token} />}
+            />
+            <Route
+              exact
+              path="/responsable/entreprise/offre"
+              component={Offre}
             />
             <Route
               exact

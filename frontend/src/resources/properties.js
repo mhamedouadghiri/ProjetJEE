@@ -1,5 +1,5 @@
 export const properties = {
-  url: "http://localhost:8080/ProjetJEE-1.0-SNAPSHOT/api/",
+  url: "http://2786d425e68e.ngrok.io/ProjetJEE-1.0-SNAPSHOT/api/",
   registerUser: "users/auth/register-user",
   checkUser: "users/auth/check-user",
   company: "company/all",
