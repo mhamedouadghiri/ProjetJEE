@@ -16,17 +16,11 @@ function Entreprise() {
   }, [posts]);
   return (
     <div className="entrepriseS">
-      {posts
-        ? posts.map((post) => (
-            <Post
-              key={post.id}
-              name={post.name}
-              email={post.email}
-              description={"L'offre de l'entreprise qui va être afficher ici "}
-              message="Offre de Stage"
-            />
-          ))
-        : "Loading data.."}
+      {posts ? (
+        posts.map((post) => <Post key={post.id} company={post} />)
+      ) : (
+        <div className="updating">No student insert</div>
+      )}
     </div>
   );
 }
