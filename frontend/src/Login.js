@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {dropInscription, removeInscription} from "./components/Animations";
 import Header from "./components/Header";
 import {properties} from "./resources/properties";
+import {Form, Image} from "react-bootstrap";
 
 export default function Login({setToken, userType}) {
   const [email, setEmail] = useState("");
@@ -101,28 +102,27 @@ export default function Login({setToken, userType}) {
   return (
     <div className="main_login">
       <Header/>
-      <div className="login">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREX6wLF2TKTLUlKd0kJeVxB3lxclYa551e6g&usqp=CAU"
-          alt=""
-        />
-        <form onSubmit={handleSubmit}>
-          <input
+      <div className={"d-flex align-items-center flex-column"}>
+        <Image src="logo.png" alt="ecs logo"/>
+        <h1 className={"display-4 text-muted"}>Sign in as <b>{userType}</b></h1>
+        <br/>
+        <Form onSubmit={handleSubmit}>
+          <Form.Control
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             type="email"
           />
-          <input
+          <Form.Control
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             type="password"
           />
-          <button type="submit">Sing In</button>
-        </form>
+          <Button variant={"primary"} type="submit">Sign In</Button>
+        </Form>
         {/*a student cannot create create an account on their own... the school takes care of this operation*/}
         {
           userType !== "student"
@@ -139,20 +139,18 @@ export default function Login({setToken, userType}) {
       </div>
       {/* inscription */}
       <div className="formulaireInscription">
-        <form className="userInscription" onSubmit={inscription} method="post">
+        <Form className="userInscription" onSubmit={inscription} method="post">
           <div className="firstPart">
             <div className="first">
-              <h3>S'inscrire</h3>
-              <p>C'est rapide est facile</p>
+              <h3>Create your account</h3>
+              <p>It takes less than 30 seconds</p>
             </div>
-            <h3 className="closeBtn" onClick={removeInscription}>
-              X
-            </h3>
+            <h3 className="closeBtn" onClick={removeInscription}>X</h3>
           </div>
           <div className="separateur"/>
           <div className="secondPart">
             <div className="zoneMail">
-              <input
+              <Form.Control
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -161,14 +159,14 @@ export default function Login({setToken, userType}) {
               />
             </div>
             <div className="zoneNP">
-              <input
+              <Form.Control
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
                 type="text"
               />
-              <input
+              <Form.Control
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="0x-xx-xx-xx"
@@ -177,8 +175,8 @@ export default function Login({setToken, userType}) {
             </div>
             <div className="zonePassword">
               <div className="password1">
-                <label>Password :</label>
-                <input
+                <Form.Label>Password :</Form.Label>
+                <Form.Control
                   required
                   value={password1}
                   onChange={(e) => setPassword1(e.target.value)}
@@ -187,8 +185,8 @@ export default function Login({setToken, userType}) {
                 />
               </div>
               <div className="password2">
-                <label>Confirm your Password :</label>
-                <input
+                <Form.Label>Confirm your Password :</Form.Label>
+                <Form.Control
                   required
                   value={password2}
                   onChange={(e) => setPassword2(e.target.value)}
@@ -199,7 +197,7 @@ export default function Login({setToken, userType}) {
             </div>
           </div>
           <Button type="submit" className="btn btn-warning">Sign In</Button>
-        </form>
+        </Form>
       </div>
     </div>
   );
