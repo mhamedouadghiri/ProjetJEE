@@ -66,11 +66,10 @@ function Home() {
       <div className="container">
         <div className="wrapper">
           <div className="homepage">
-            <h5>
-              The <b>ECS</b>, is a creative application, makes student easly
-              find a stage, and in the oder side the businesses find also easly
-              the trainees who meet their needs.
-            </h5>
+            <h4>
+              <b>ECS</b> is a creative application that helps student find an internship;
+              and similarly helps companies cherry pick the best profiles that match their expectations.
+            </h4>
           </div>
         </div>
       </div>

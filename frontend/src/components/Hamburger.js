@@ -18,9 +18,9 @@ import Student from "../images/Student.webp";
 import Responsible from "../images/responsible.webp";
 
 const comptes = [
-  { name: "Entreprise", image: Entreprise, component: "/entreprise" },
+  { name: "Company", image: Entreprise, component: "/entreprise" },
   { name: "Student", image: Student, component: "/etudiant" },
-  { name: "Responsable", image: Responsible, component: "/responsable" },
+  { name: "School", image: Responsible, component: "/responsable" },
 ];
 
 const Hamburger = ({ state }) => {
@@ -109,12 +109,11 @@ const Hamburger = ({ state }) => {
                 </ul>
               </nav>
               <div ref={(el) => (info = el)} className="info">
-                <h3>Our ECS Application</h3>
-                <p>
-                  The ECS application givs you the opportunities to find a PFE
-                  stage easly and if you are a company you can shose the best
-                  student in the year .
-                </p>
+                <h2>Our ECS Application</h2>
+                <h6>
+                  The ECS platform gives you as a student the opportunity to find the best suited internship;
+                  and helps you as a company choose the candidates who meet your needs.
+                </h6>
               </div>
               <div className="locations">
                 Login as:
