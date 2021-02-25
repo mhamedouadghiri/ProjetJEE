@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./Login.css";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { dropInscription, removeInscription } from "../components/Animations";
-import Header from "../components/Header";
-import { properties } from "../resources/properties";
+import {dropInscription, removeInscription} from "./components/Animations";
+import Header from "./components/Header";
+import {properties} from "./resources/properties";
 
-function Login({ setToken }) {
+export default function Login({setToken, userType}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let detailsAuth = {
     email: email,
     password: password,
-    "user-type": "school",
+    "user-type": userType,
   };
   let formBodyAuth = [];
   for (let property in detailsAuth) {
@@ -24,24 +24,24 @@ function Login({ setToken }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email !== "" && password !== "") {
-      fetch(`${properties.url}${properties.checkUser}`, {
-        method: "POST",
-        //mode: "no-cors",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        body: formBodyAuth,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setToken(data);
-          console.log(data);
-        });
-    } else {
-      alert("you have to right your email and your password please");
-    }
+    fetch(`${properties.url}${properties.checkUser}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: formBodyAuth,
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json()
+          .then((data) => {
+            setToken(data);
+            console.log(data);
+          })
+      } else {
+        alert("Incorrect username or password.");
+      }
+    });
   };
 
   //for inscription
@@ -56,7 +56,7 @@ function Login({ setToken }) {
     password: password1,
     name: name,
     phone: phone,
-    "user-type": "school",
+    "user-type": userType,
   };
 
   let formBody = [];
@@ -69,39 +69,38 @@ function Login({ setToken }) {
 
   const inscription = (e) => {
     e.preventDefault();
-    if (
-      password1 === password2 &&
-      name !== "" &&
-      email !== "" &&
-      phone !== ""
-    ) {
-      alert("dakchi howa hadak");
+    if (password1 === password2) {
       fetch(`${properties.url}${properties.registerUser}`, {
         method: "post",
-
         headers: {
           Accept: "application/json",
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
         body: formBody,
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("the data:", data));
-
-      removeInscription();
-      setPhone("");
-      setEmail("");
-      setName("");
+      }).then((response) => {
+        if (response.status === 200) {
+          response.json()
+            .then((data) => {
+              console.log("the data:", data)
+            });
+          removeInscription();
+          setPhone("");
+          setEmail("");
+          setName("");
+        } else {
+          alert("An error has occurred.")
+        }
+      });
       setPassword1("");
       setPassword2("");
     } else {
-      alert("dakchi machi howa hadak bdl ");
+      alert("Passwords don't match.");
     }
   };
 
   return (
     <div className="main_login">
-      <Header />
+      <Header/>
       <div className="login">
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREX6wLF2TKTLUlKd0kJeVxB3lxclYa551e6g&usqp=CAU"
@@ -109,12 +108,14 @@ function Login({ setToken }) {
         />
         <form onSubmit={handleSubmit}>
           <input
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             type="email"
           />
           <input
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
@@ -122,12 +123,19 @@ function Login({ setToken }) {
           />
           <button type="submit">Sing In</button>
         </form>
-        <p>
-          You forgot your password?{" "}
-          <span className="login__register" onClick={dropInscription}>
-            Sign up
-          </span>
-        </p>
+        {/*a student cannot create create an account on their own... the school takes care of this operation*/}
+        {
+          userType !== "student"
+            ?
+            <p>
+              New to ECS?{" "}
+              <span className="login__register" onClick={dropInscription}>
+                Create an account.
+              </span>
+            </p>
+            :
+            <div/>
+        }
       </div>
       {/* inscription */}
       <div className="formulaireInscription">
@@ -141,10 +149,11 @@ function Login({ setToken }) {
               X
             </h3>
           </div>
-          <div className="separateur"></div>
+          <div className="separateur"/>
           <div className="secondPart">
             <div className="zoneMail">
               <input
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
@@ -153,6 +162,7 @@ function Login({ setToken }) {
             </div>
             <div className="zoneNP">
               <input
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
@@ -169,6 +179,7 @@ function Login({ setToken }) {
               <div className="password1">
                 <label>Password :</label>
                 <input
+                  required
                   value={password1}
                   onChange={(e) => setPassword1(e.target.value)}
                   placeholder="Password"
@@ -178,6 +189,7 @@ function Login({ setToken }) {
               <div className="password2">
                 <label>Confirm your Password :</label>
                 <input
+                  required
                   value={password2}
                   onChange={(e) => setPassword2(e.target.value)}
                   placeholder="Password"
@@ -186,13 +198,9 @@ function Login({ setToken }) {
               </div>
             </div>
           </div>
-          <Button type="submit" className="btn btn-warning">
-            Sing In
-          </Button>
+          <Button type="submit" className="btn btn-warning">Sign In</Button>
         </form>
       </div>
     </div>
   );
 }
-
-export default Login;
