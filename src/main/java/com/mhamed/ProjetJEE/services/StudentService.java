@@ -182,7 +182,7 @@ public class StudentService {
 
     @POST
     @Path("/apply")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response apply(@FormParam("student-id") Long studentId,
                           @FormParam("offer-id") Long offerId,

@@ -2,6 +2,7 @@ package com.mhamed.ProjetJEE.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mhamed.ProjetJEE.data.ApplicationDAO;
 import com.mhamed.ProjetJEE.data.ApplicationDatasource;
@@ -29,7 +30,22 @@ public class ApplicationService {
         if (applications == null || applications.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(applications).build();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode allApplications = mapper.createArrayNode();
+        for (Application application : applications) {
+            try {
+                JsonNode applicationNode = mapper.convertValue(application, JsonNode.class);
+                ObjectNode jsonNode = applicationNode.deepCopy();
+
+                ObjectNode studentInfo = StudentUtils.studentInfoAsObjectNode(application.getStudentId());
+                jsonNode.set("studentInfo", studentInfo);
+
+                allApplications.add(jsonNode);
+            } catch (Exception ignored) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+        return Response.ok().entity(allApplications.toString()).build();
     }
 
     @GET

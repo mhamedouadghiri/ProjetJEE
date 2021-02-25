@@ -16,7 +16,7 @@ public class InternshipOfferDatasource extends BaseDatasource<InternshipOffer> i
 
     @Override
     public Long save(InternshipOffer entity) {
-        String query = "insert into internship_offer values (null, ?, ?, ?, ?, ?, ?, ?, null, null, ?, ?)";
+        String query = "insert into internship_offer values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getTitle());
