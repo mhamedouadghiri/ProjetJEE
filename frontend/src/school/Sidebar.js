@@ -34,7 +34,7 @@ function Sidebar(props) {
 
       <div className="sidebar__bottom">
         <p>Comptes</p>
-        <Link to="/responsable/entreprise">
+        <Link to="/responsable">
           {recentItem("EntrepriseInterships", <BusinessCenterIcon />)}
         </Link>
         <Link to="/responsable/student">

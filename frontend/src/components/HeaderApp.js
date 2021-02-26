@@ -6,6 +6,7 @@ import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import image from "../images/Lotfi.jpeg";
+import logo from "../images/logo.png";
 
 function HeaderApp({ setToken }) {
   const logoutOfApp = () => {
@@ -19,10 +20,7 @@ function HeaderApp({ setToken }) {
   return (
     <div className="header">
       <div className="header__left">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREX6wLF2TKTLUlKd0kJeVxB3lxclYa551e6g&usqp=CAU"
-          alt=""
-        />
+        <img src={logo} alt="" />
       </div>
 
       <div className="header__right">

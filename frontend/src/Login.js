@@ -1,17 +1,17 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {dropInscription, removeInscription} from "./components/Animations";
+import { dropInscription, removeInscription } from "./components/Animations";
 import Header from "./components/Header";
-import {properties} from "./resources/properties";
-import {Form, Image} from "react-bootstrap";
+import { properties } from "./resources/properties";
+import { Form, Image } from "react-bootstrap";
 
-export default function Login({setToken, userType}) {
-  const [email, setEmail] = useState("");
+export default function Login({ setToken, userType }) {
+  const [email1, setEmail1] = useState("");
   const [password, setPassword] = useState("");
   let detailsAuth = {
-    email: email,
+    email: email1,
     password: password,
     "user-type": userType,
   };
@@ -34,11 +34,10 @@ export default function Login({setToken, userType}) {
       body: formBodyAuth,
     }).then((response) => {
       if (response.status === 200) {
-        response.json()
-          .then((data) => {
-            setToken(data);
-            console.log(data);
-          })
+        response.json().then((data) => {
+          setToken(data);
+          console.log(data);
+        });
       } else {
         alert("Incorrect username or password.");
       }
@@ -47,6 +46,7 @@ export default function Login({setToken, userType}) {
 
   //for inscription
 
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password1, setPassword1] = useState("");
@@ -80,16 +80,15 @@ export default function Login({setToken, userType}) {
         body: formBody,
       }).then((response) => {
         if (response.status === 200) {
-          response.json()
-            .then((data) => {
-              console.log("the data:", data)
-            });
+          response.json().then((data) => {
+            console.log("the data:", data);
+          });
           removeInscription();
           setPhone("");
           setEmail("");
           setName("");
         } else {
-          alert("An error has occurred.")
+          alert("An error has occurred.");
         }
       });
       setPassword1("");
@@ -101,41 +100,44 @@ export default function Login({setToken, userType}) {
 
   return (
     <div className="main_login">
-      <Header/>
-      <div className={"d-flex align-items-center flex-column"}>
-        <Image src="logo.png" alt="ecs logo"/>
-        <h1 className={"display-4 text-muted"}>Sign in as <b>{userType}</b></h1>
-        <br/>
+      <Header />
+      <div className="d-flex align-items-center flex-column toto">
+        <Image className="img" src="logo.png" alt="ecs logo" />
+        <p className="">
+          Sign in as <b>{userType}</b>
+        </p>
         <Form onSubmit={handleSubmit}>
           <Form.Control
+            className="authinput"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={email1}
+            onChange={(e) => setEmail1(e.target.value)}
             placeholder="Email"
             type="email"
           />
           <Form.Control
+            className="authinput"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             type="password"
           />
-          <Button variant={"primary"} type="submit">Sign In</Button>
+          <Button className="danger botona" type="submit">
+            Sign In
+          </Button>
         </Form>
         {/*a student cannot create create an account on their own... the school takes care of this operation*/}
-        {
-          userType !== "student"
-            ?
-            <p>
-              New to ECS?{" "}
-              <span className="login__register" onClick={dropInscription}>
-                Create an account.
-              </span>
-            </p>
-            :
-            <div/>
-        }
+        {userType !== "student" ? (
+          <p className="newEcs">
+            New to ECS?{" "}
+            <span className="login__register" onClick={dropInscription}>
+              Create an account.
+            </span>
+          </p>
+        ) : (
+          <div />
+        )}
       </div>
       {/* inscription */}
       <div className="formulaireInscription">
@@ -145,9 +147,11 @@ export default function Login({setToken, userType}) {
               <h3>Create your account</h3>
               <p>It takes less than 30 seconds</p>
             </div>
-            <h3 className="closeBtn" onClick={removeInscription}>X</h3>
+            <h3 className="closeBtn" onClick={removeInscription}>
+              X
+            </h3>
           </div>
-          <div className="separateur"/>
+          <div className="separateur" />
           <div className="secondPart">
             <div className="zoneMail">
               <Form.Control
@@ -196,7 +200,9 @@ export default function Login({setToken, userType}) {
               </div>
             </div>
           </div>
-          <Button type="submit" className="btn btn-warning">Sign In</Button>
+          <Button type="submit" className="btn btn-warning">
+            Sign In
+          </Button>
         </Form>
       </div>
     </div>

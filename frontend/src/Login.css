@@ -26,6 +26,27 @@
   margin-bottom: 10px;
   border-radius: 5px;
 }
+.toto {
+  width: 30%;
+
+  border-radius: 20px;
+  box-shadow: 2px 1px 1px rgb(151, 151, 151);
+  margin: auto;
+  transform: translateY(45%);
+  background-color: rgb(255, 255, 255);
+}
+.main_login {
+  background-color: rgb(255, 255, 255);
+  height: 913px;
+}
+.img {
+  box-shadow: -2px 1px 1px rgb(151, 151, 151);
+  border-radius: 20px;
+  object-fit: contain;
+  height: 70px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .login > form > button {
   width: 365px;
   height: 50px;
@@ -41,7 +62,24 @@
 .login > p {
   margin-top: 20px;
 }
+Form {
+  padding: 5px 5px;
+}
+Form > .authinput {
+  margin-top: 10px;
+  width: 250px;
+}
+.botona {
+  border: 1px solid black;
+  margin-top: 10px;
+  display: flex;
+  margin-left: 180px;
+  margin-bottom: 10px;
+}
 
+.newEcs {
+  color: #878b8d;
+}
 .navbar-login {
   width: 970px;
   margin: auto;
