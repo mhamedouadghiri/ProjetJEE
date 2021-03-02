@@ -13,3 +13,8 @@
 # Maven
 target/
 log/
+
+# Recommender System
+**/venv
+**/.ipynb_checkpoints
+**/data
