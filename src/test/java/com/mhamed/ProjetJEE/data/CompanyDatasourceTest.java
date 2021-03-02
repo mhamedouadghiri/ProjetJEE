@@ -1,28 +1,40 @@
 package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.Company;
-import com.mhamed.ProjetJEE.model.User;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 
-public class CompanyDatasourceTest extends User {
+@RunWith(Arquillian.class)
+class CompanyDatasourceTest {
 
-    private CompanyDatasource companyDatasource;
+    private static CompanyDatasource companyDatasource;
 
-    @BeforeClass
-    public void beforeClass() {
+    @BeforeAll
+    static void beforeAll() {
         companyDatasource = new CompanyDatasource();
     }
 
-    @AfterClass
-    public void afterClass() {
+    @AfterAll
+    static void afterAll() {
         JDBCConnection.closeConnection();
     }
 
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    }
+
     @Test
-    public void testGet() {
+    void get() {
         Company actual = (Company) companyDatasource.get(1L);
 
         Company expected = new Company(1L,
@@ -35,11 +47,11 @@ public class CompanyDatasourceTest extends User {
                 null,
                 "69988 Barby Park");
 
-        Assert.assertEquals(actual, expected);
+        Assertions.assertEquals(actual, expected);
     }
 
     @Test
-    public void testGetByEmail() {
+    void getByEmail() {
         Company actual = (Company) companyDatasource.getByEmail("ccrickmer0@ihg.com");
 
         Company expected = new Company(1L,
@@ -52,6 +64,6 @@ public class CompanyDatasourceTest extends User {
                 null,
                 "69988 Barby Park");
 
-        Assert.assertEquals(actual, expected);
+        Assertions.assertEquals(actual, expected);
     }
 }
