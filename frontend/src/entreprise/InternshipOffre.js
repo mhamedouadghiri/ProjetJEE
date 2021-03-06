@@ -31,7 +31,11 @@ function InternshipOffre({
       <div className="post_body">
         <p className="field">{field}</p>
         <p className="description">{description}</p>
-        <p className="remuneration">Pay : {remuneration}$</p>
+        {remuneration ? (
+          <p className="remuneration">Pay : {remuneration}$</p>
+        ) : (
+          " "
+        )}
       </div>
     </div>
   );

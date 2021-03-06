@@ -28,7 +28,7 @@ function Candidature(props) {
             />
           ))
         ) : (
-          <div className="updating">Loading data..</div>
+          <div className="updating">No students to apply for this offer</div>
         )}
       </div>
     </div>

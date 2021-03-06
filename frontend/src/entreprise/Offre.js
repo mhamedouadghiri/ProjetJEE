@@ -31,6 +31,7 @@ function Offre(props) {
     "start-date": sdate,
     "end-date": edate,
     "company-id": props.token.id,
+    pay: pay,
   };
   let formBodyOffr = [];
   for (let property in detailsOffr) {
@@ -95,7 +96,9 @@ function Offre(props) {
             />
           ))
         ) : (
-          <div className="updating">Loading data..</div>
+          <div className="updating">
+            Welcome {props.token.name} You can add your first offer.
+          </div>
         )}
       </div>
       <div className="creatoffres">
@@ -153,7 +156,6 @@ function Offre(props) {
                   selected={sdate}
                   onChange={(date) => setSdate(date)}
                   dateFormat="yyy-MM-dd"
-                  maxDate={new Date()}
                   isClearable
                   showYearDropdown
                 />
@@ -164,11 +166,24 @@ function Offre(props) {
                   selected={edate}
                   onChange={(date) => setEdate(date)}
                   dateFormat="yyy-MM-dd"
-                  maxDate={new Date()}
                   isClearable
                   showYearDropdown
                 />
               </div>
+            </div>
+            <div className="pay">
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Pay</Form.Label>
+                <Form.Control
+                  className="payinput"
+                  onChange={(e) => {
+                    setPay(e.target.value);
+                  }}
+                  value={pay}
+                  type="text"
+                  placeholder="Pay"
+                />
+              </Form.Group>
             </div>
           </Body>
           <Footer>

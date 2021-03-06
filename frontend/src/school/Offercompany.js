@@ -20,7 +20,7 @@ function Offercompany({ offer, userId }) {
         <div className="post_body">
           <p className="field">{offer.field}</p>
           <p className="description">{offer.description}</p>
-          <p className="remuneration">Pay : {offer.pay}$</p>
+          {offer.pay ? <p className="remuneration">Pay : {offer.pay}$</p> : " "}
         </div>
       </div>
     </>

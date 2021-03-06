@@ -57,7 +57,6 @@ function Student(props) {
       firstName !== "" &&
       lastName !== ""
     ) {
-      alert("test");
       console.log(detailsStud);
       fetch(`${properties.url}${properties.registerUser}`, {
         method: "post",
@@ -82,7 +81,7 @@ function Student(props) {
 
       handleClose();
     } else {
-      alert("khassk t3mr");
+      alert("you have to fill in all the fields");
       console.log(detailsStud);
     }
   };

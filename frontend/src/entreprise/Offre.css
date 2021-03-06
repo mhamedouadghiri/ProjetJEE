@@ -20,3 +20,6 @@ Button {
   border-radius: 10px;
   width: 50rem;
 }
+.payinput {
+  width: 50%;
+}

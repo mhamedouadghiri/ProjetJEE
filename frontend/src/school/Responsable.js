@@ -22,7 +22,6 @@ function Responsable() {
         <Router>
           <Sidebar key={token.id} user={token} />
           <Switch>
-            {/* <Route exact path="/responsable/" component={Home} /> */}
             <Route
               exact
               path="/responsable"
@@ -41,19 +40,6 @@ function Responsable() {
           </Switch>
         </Router>
       </div>
-    </div>
-  );
-}
-
-function Home() {
-  return (
-    <div className="home">
-      <h1>Home page</h1>
-      <p className="home_parag">
-        This is your profile You can creat a Student account and you can visit
-        also the entreprises that exist in this application in order to manage
-        your school
-      </p>
     </div>
   );
 }

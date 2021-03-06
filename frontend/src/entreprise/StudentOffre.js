@@ -35,11 +35,11 @@ function StudentOffre({ candidature }) {
           </ListGroup>
         </Card>
         <Card style={{ width: "15rem" }}>
-          <Card.Header>Languages</Card.Header>
+          <Card.Header>Experiences</Card.Header>
           <ListGroup variant="flush">
-            {candidature.studentInfo.languages
-              ? candidature.studentInfo.languages.map((language) => (
-                  <ListGroup.Item>{language.name}</ListGroup.Item>
+            {candidature.studentInfo.experiences
+              ? candidature.studentInfo.experiences.map((experience) => (
+                  <ListGroup.Item>{experience.description}</ListGroup.Item>
                 ))
               : "<p>toto</p>"}
           </ListGroup>
