@@ -128,7 +128,7 @@ CREATE TABLE `internship_offer` (
   `duration` int DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `description` text,
   `pay` int DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
   `field` varchar(255) DEFAULT NULL,
