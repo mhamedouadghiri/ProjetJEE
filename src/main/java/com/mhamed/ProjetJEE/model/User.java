@@ -27,6 +27,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
+        if (o.getClass() != getClass()) return false;
 
         User user = (User) o;
 

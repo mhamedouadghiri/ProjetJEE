@@ -1,28 +1,40 @@
 package com.mhamed.ProjetJEE.data;
 
 import com.mhamed.ProjetJEE.model.School;
-import com.mhamed.ProjetJEE.model.User;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 
-public class SchoolDatasourceTest extends User {
+@RunWith(Arquillian.class)
+class SchoolDatasourceTest {
 
-    private SchoolDatasource schoolDatasource;
+    private static SchoolDatasource schoolDatasource;
 
-    @BeforeClass
-    public void beforeClass() {
+    @BeforeAll
+    static void beforeAll() {
         schoolDatasource = new SchoolDatasource();
     }
 
-    @AfterClass
-    public void afterClass() {
+    @AfterAll
+    static void afterAll() {
         JDBCConnection.closeConnection();
     }
 
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    }
+
     @Test
-    public void testGet() {
+    public void get() {
         School actual = (School) schoolDatasource.get(1L);
 
         School expected = new School(1L,
@@ -31,11 +43,11 @@ public class SchoolDatasourceTest extends User {
                 "9361142625",
                 "Philosophisch-Theologische Hochschule der Salesianer Don Boscos");
 
-        Assert.assertEquals(actual, expected);
+        Assertions.assertEquals(actual, expected);
     }
 
     @Test
-    public void testGetByEmail() {
+    public void getByEmail() {
         School actual = (School) schoolDatasource.getByEmail("ameins0@mozilla.org");
 
         School expected = new School(1L,
@@ -44,6 +56,6 @@ public class SchoolDatasourceTest extends User {
                 "9361142625",
                 "Philosophisch-Theologische Hochschule der Salesianer Don Boscos");
 
-        Assert.assertEquals(actual, expected);
+        Assertions.assertEquals(actual, expected);
     }
 }
