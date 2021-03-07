@@ -13,10 +13,9 @@ COPY package-lock.json ./
 RUN npm ci
 
 COPY . ./
+RUN sed -i "s/localhost:8080/${IP}/" ./src/resources/properties.js
 
 RUN npm run build
-
-RUN sed -i "s/localhost:8080/${IP}/" ./src/resources/properties.js
 
 # prod env
 FROM node:12.18.2-alpine3.9
